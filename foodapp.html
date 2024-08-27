@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodFusion - Next-Gen AI Culinary Innovation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@barba/core"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        @layer utilities {
+            .text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+            .text-gradient { background-clip: text; -webkit-background-clip: text; color: transparent; }
+        }
+        .custom-shape-divider-bottom-1627925439 {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .custom-shape-divider-bottom-1627925439 svg {
+            position: relative;
+            display: block;
+            width: calc(300% + 1.3px);
+            height: 150px;
+        }
+        .custom-shape-divider-bottom-1627925439 .shape-fill {
+            fill: #FFFFFF;
+        }
+    </style>
+</head>
+<body class="font-['Poppins'] bg-gradient-to-br from-gray-900 to-black text-white overflow-x-hidden">
+    <nav id="main-nav" class="fixed w-full z-50 bg-black bg-opacity-50 backdrop-blur-lg transition-all duration-300">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-3xl font-bold text-gradient bg-gradient-to-r from-purple-400 to-pink-600">FoodFusion</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="text-white hover:text-purple-400 transition duration-300">About</a>
+                    <a href="#features" class="text-white hover:text-purple-400 transition duration-300">Features</a>
+                    <a href="#ai-chef" class="text-white hover:text-purple-400 transition duration-300">AI Chef</a>
+                    <a href="#recipes" class="text-white hover:text-purple-400 transition duration-300">Recipes</a>
+                    <a href="#community" class="text-white hover:text-purple-400 transition duration-300">Community</a>
+                </div>
+                <button id="loginBtn" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-full hover:opacity-90 transition duration-300 transform hover:scale-105">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <header id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div id="hero-bg" class="absolute inset-0 z-0"></div>
+        <div class="relative z-10 text-center">
+            <h1 class="text-6xl md:text-8xl font-bold mb-4 text-shadow animate-text">Culinary Revolution</h1>
+            <p class="text-xl md:text-2xl mb-8 text-shadow">Embrace the future of cooking with AI-powered innovation</p>
+            <a href="#features" class="bg-white text-black px-8 py-3 rounded-full text-lg font-semibold hover:bg-purple-100 transition duration-300 transform hover:scale-105 inline-block">Explore the Future</a>
+        </div>
+        <div class="custom-shape-divider-bottom-1627925439">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </header>
+
+    <section id="about" class="py-20 bg-gradient-to-br from-purple-900 to-black">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold mb-12 text-center text-gradient bg-gradient-to-r from-purple-400 to-pink-600">Redefining Culinary Experiences</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h3 class="text-3xl font-semibold mb-4">Our Vision</h3>
+                    <p class="text-gray-300">FoodFusion is at the forefront of culinary innovation, seamlessly blending cutting-edge AI technology with gastronomic artistry. We're not just changing recipes; we're revolutionizing the entire cooking paradigm.</p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2">
+                        <li>Real-time AI recipe generation</li>
+                        <li>Adaptive meal planning with nutritional optimization</li>
+                        <li>AR-powered cooking guidance</li>
+                        <li>Smart kitchen integration</li>
+                        <li>Global culinary community platform</li>
+                    </ul>
+                </div>
+                <div id="about-animation" class="w-full h-96 bg-gray-800 rounded-lg shadow-xl relative overflow-hidden">
+                    <img src="1_7Mpz4cnldDFuzo51yZdEYQ.png" alt="Description of Image" class="object-cover w-full h-full">
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+ 
+
+    <section id="ai-chef" class="py-20 bg-gradient-to-br from-black to-purple-900 relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-5xl font-bold mb-12 text-center text-gradient bg-gradient-to-r from-purple-400 to-pink-600">Meet Your AI Chef</h2>
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="w-full md:w-1/2 mb-8 md:mb-0">
+                    <div id="ai-chef-model" class="w-full h-96 bg-gray-800 rounded-lg shadow-xl relative overflow-hidden">
+                        <img src="white-friendly-chef-robot-with-food-on-table-cooking-robot-artificial-intelligence-concept-vector.jpg" alt="AI Chef Model" class="object-cover w-full h-full">
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-1/2 md:pl-12">
+                    <p class="text-xl text-gray-300 mb-8">Experience the future of cooking with our advanced AI assistant. Get personalized advice, real-time recipe modifications, and culinary tips tailored just for you.</p>
+                    <button id="aiChefDemo" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105">Try AI Chef Demo</button>
+                </div>
+            </div>
+        </div>
+        <div class="absolute inset-0 z-0 opacity-20">
+            <div id="particles-js"></div>
+        </div>
+    </section>
+
+    <section id="ai-chef" class="py-20 bg-gradient-to-br from-black to-purple-900 relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-5xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">Explore Fusion Recipes</h2>
+            <div class="mb-8">
+                <input type="text" id="recipeSearch" placeholder="Search recipes..." class="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-color transition duration-300 ease-in-out">
+            </div>
+            <div id="recipeGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Recipe cards will be dynamically inserted here -->
+            </div>
+            <div class="mt-12 text-center">
+                <button id="loadMoreRecipes" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-opacity-90 transition duration-300 transform hover:scale-105">Load More</button>
+            </div>
+        </div>
+    </section>
+    
+
+    <section id="ar-cooking" class="py-20 bg-gradient-to-br from-purple-900 to-black relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-5xl font-bold mb-16 text-center text-gradient bg-gradient-to-r from-purple-400 to-pink-600">AR Cooking Experience</h2>
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="w-full md:w-1/2 mb-8 md:mb-0">
+                    <div id="ar-demo" class="w-full h-96 bg-gray-800 rounded-lg shadow-xl relative overflow-hidden">
+                        <img src="foodverse.jpg" alt="AR Demo" class="object-cover w-full h-full">
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-1/2 md:pl-12">
+                    <p class="text-xl text-gray-300 mb-8">Step into the future of cooking with our Augmented Reality guide. Perfect your techniques with real-time 3D visualizations and interactive instructions.</p>
+                    <button id="launchARDemo" class="bg-gradient-to-r from-green-400 to-blue-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105">Launch AR Demo</button>
+                </div>
+            </div>
+        </div>
+        <div class="absolute inset-0 z-0 opacity-20">
+            <div id="ar-particles"></div>
+        </div>
+    </section>
+
+    <section id="community" class="py-20 bg-black">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold mb-16 text-center text-gradient bg-gradient-to-r from-purple-400 to-pink-600">Global Culinary Community</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="bg-gradient-to-br from-purple-800 to-black p-8 rounded-lg shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">Collaborative Cooking</h3>
+                    <p class="text-gray-300 mb-6">Connect with food enthusiasts worldwide. Share recipes, collaborate on dishes in real-time, and participate in virtual cook-offs.</p>
+                    <a href="#" class="text-purple-400 hover:text-purple-300 transition duration-300">Join the Community →</a>
+                </div>
+                <div class="bg-gradient-to-br from-pink-800 to-black p-8 rounded-lg shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">AI-Powered Challenges</h3>
+                    <p class="text-gray-300 mb-6">Participate in weekly AI-generated cooking challenges. Push your culinary boundaries and win exciting prizes.</p>
+                    <a href="#" class="text-pink-400 hover:text-pink-300 transition duration-300">Start a Challenge →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="smart-kitchen" class="py-20 bg-gradient-to-br from-black to-purple-900">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold mb-16 text-center text-gradient bg-gradient-to-r from-purple-400 to-pink-600">Smart Kitchen Integration</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-black bg-opacity-50 p-8 rounded-lg shadow-xl backdrop-filter backdrop-blur-lg">
+                    <div id="connected-appliances-icon" class="text-5xl mb-6"></div>
+                    <h3 class="text-2xl font-semibold mb-4">Connected Appliances</h3>
+                    <p class="text-gray-300">Seamlessly control your smart ovens, fridges, and more through our app.</p>
+                </div>
+                <div class="bg-black bg-opacity-50 p-8 rounded-lg shadow-xl backdrop-filter backdrop-blur-lg">
+                    <div id="inventory-management-icon" class="text-5xl mb-6"></div>
+                    <h3 class="text-2xl font-semibold mb-4">Inventory Management</h3>
+                    <p class="text-gray-300">AI-powered tracking of your pantry and fridge inventory for efficient meal planning.</p>
+                </div>
+                <div class="bg-black bg-opacity-50 p-8 rounded-lg shadow-xl backdrop-filter backdrop-blur-lg">
+                    <div id="voice-control-icon" class="text-5xl mb-6"></div>
+                    <h3 class="text-2xl font-semibold mb-4">Voice-Controlled Cooking</h3>
+                    <p class="text-gray-300">Hands-free cooking with voice commands for recipes, timers, and appliance control.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="nutrition-analysis" class="py-20 bg-black">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold mb-16 text-center text-gradient bg-gradient-to-r from-purple-400 to-pink-600">AI Nutrition Analysis</h2>
+            <div class="bg-gradient-to-br from-purple-900 to-black p-8 rounded-lg shadow-xl">
+                <p class="text-gray-300 mb-8 text-center">Upload a photo of your meal or input ingredients to get instant nutritional information and personalized health insights.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
+                    <div class="relative">
+                        <input type="file" id="mealPhoto" accept="image/*" class="hidden">
+                        <label for="mealPhoto" class="cursor-pointer bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition duration-300 inline-block">Upload Meal Photo</label>
+                    </div>
+                    <span class="text-gray-300">or</span>
+                    <input type="text" id="ingredientList" placeholder="Type ingredients here..." class="w-full md:w-auto px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <button id="analyzeNutrition" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition duration-300">Analyze Nutrition</button>
+                </div>
+                <div id="nutritionResult" class="mt-8 bg-black bg-opacity-50 p-6 rounded-lg hidden">
+                    <!-- Nutrition analysis results will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ai-sommelier" class="py-20 bg-gradient-to-br from-purple-900 to-black">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold mb-16 text-center text-gradient bg-gradient-to-r from-purple-400 to-pink-600">AI Sommelier</h2>
+            <div class="bg-black bg-opacity-50 p-8 rounded-lg shadow-xl backdrop-filter backdrop-blur-lg">
+                <p class="text-gray-300 mb-8 text-center">Get AI-powered wine and beverage pairing suggestions for your meals.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
+                    <input type="text" id="dishInput" placeholder="Enter your dish..." class="w-full md:w-auto px-4 py-2 rounded-full bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <button id="getPairing" class="bg-gradient-to-r from-red-500 to-purple-600 text-white px-8 py-3 rounded-full font-semibold hover:opacity-90 transition duration-300">Get Pairing Suggestion</button>
+                </div>
+                <div id="pairingResult" class="mt-8 bg-black bg-opacity-50 p-6 rounded-lg hidden">
+                    <!-- Pairing suggestions will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="virtual-kitchen" class="py-20 bg-black relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-5xl font-bold mb-16 text-center text-gradient bg-gradient-to-r from-purple-400 to-pink-600">Virtual Kitchen Experience</h2>
+            <div class="text-center">
+                <p class="text-gray-300 mb-8 text-xl">Step into our fully interactive 3D virtual kitchen. Practice your skills, experiment with recipes, and master new techniques in a risk-free environment.</p>
+                <button id="enterVirtualKitchen" class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:opacity-90 transition duration-300 transform hover:scale-105">Enter Virtual Kitchen</button>
+            </div>
+            <div id="virtual-kitchen-preview" class="mt-12 w-full h-96 bg-gray-800 rounded-lg shadow-xl"></div>
+        </div>
+        <div class="absolute inset-0 z-0 opacity-20">
+            <div id="kitchen-particles"></div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4 text-gradient bg-gradient-to-r from-purple-400 to-pink-600">FoodFusion</h3>
+                    <p class="text-gray-400">Revolutionizing home cooking with AI-powered culinary innovation.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition duration-300">Features</a></li>
+                        <li><a href="#ai-chef" class="text-gray-400 hover:text-white transition duration-300">AI Chef</a></li>
+                        <li><a href="#recipes" class="text-gray-400 hover:text-white transition duration-300">Recipes</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Connect</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Facebook</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Twitter</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Instagram</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">YouTube</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Stay Updated</h4>
+                    <p class="text-gray-400 mb-4">Get the latest on AI cooking innovations and exclusive recipes.</p>
+                    <form class="flex flex-col space-y-2">
+                        <input type="email" placeholder="Enter your email" class="px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <button type="submit" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-300">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 FoodFusion. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Navbar animation
+        gsap.to("#main-nav", {
+            scrollTrigger: {
+                start: "top top",
+                end: "+=200",
+                scrub: true
+            },
+            backgroundColor: "rgba(0,0,0,0.8)",
+            height: "70px"
+        });
+
+        // Hero section parallax effect
+        gsap.to("#hero-bg", {
+            scrollTrigger: {
+                scrub: true
+            },
+            y: (i, target) => -ScrollTrigger.maxScroll(window) * target.dataset.speed,
+            ease: "none"
+        });
+
+        // Feature cards animation
+        gsap.from("#features .grid > div", {
+            scrollTrigger: {
+                trigger: "#features",
+                start: "top center"
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2
+        });
+
+        // AI Chef model animation
+        let aiChefTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#ai-chef",
+                start: "top center",
+                end: "bottom center",
+                scrub: 1
+            }
+        });
+        aiChefTl.to("#ai-chef-model", { rotationY: 360, duration: 1 });
+
+        // Recipe grid animation
+        gsap.from("#recipeGrid > div", {
+            scrollTrigger: {
+                trigger: "#recipes",
+                start: "top center"
+            },
+            opacity: 0,
+            y: 30,
+            duration: 0.5,
+            stagger: 0.1
+        });
+
+        // Particle.js configurations
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: false },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 6, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        });
+
+        // AR Demo animation
+        let arDemoTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#ar-cooking",
+                start: "top center",
+                end: "bottom center",
+                scrub: 1
+            }
+        });
+        arDemoTl.to("#ar-demo", { scale: 1.1, duration: 1 });
+
+        // Virtual Kitchen Preview animation
+        let virtualKitchenTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#virtual-kitchen",
+                start: "top center",
+                end: "bottom center",
+                scrub: 1
+            }
+        });
+        virtualKitchenTl.to("#virtual-kitchen-preview", { scale: 1.05, duration: 1 });
+
+        // Lottie animations
+        let aiRecipeAnimation = lottie.loadAnimation({
+            container: document.getElementById('ai-recipe-icon'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'https://assets2.lottiefiles.com/packages/lf20_UJNc2t.json'
+        });
+
+        let mealPlannerAnimation = lottie.loadAnimation({
+            container: document.getElementById('meal-planner-icon'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'https://assets4.lottiefiles.com/packages/lf20_TkBAom.json'
+        });
+
+        let vrClassAnimation = lottie.loadAnimation({
+            container: document.getElementById('vr-class-icon'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'https://assets3.lottiefiles.com/packages/lf20_2ZKqKUm2Jm.json'
+        });
+
+     // Recipe loading functionality
+const recipeData = [
+{ 
+    name: "AI-Fusion Sushi Roll", 
+    description: "A unique blend of traditional sushi with AI-suggested flavor combinations.", 
+    image: "fusion-sushi-roll-combining-elements-from-generative-ai_1169651-4562.jpg",
+    ingredients: ["Sushi rice", "Nori sheets", "AI-suggested fish", "Avocado", "Cucumber", "Soy sauce"],
+    steps: [
+        "Cook the sushi rice according to package instructions.",
+        "Lay out the nori sheet and spread a thin layer of rice.",
+        "Place AI-suggested fish, avocado, and cucumber in the center.",
+        "Roll the nori sheet tightly and slice into pieces.",
+        "Serve with soy sauce and enjoy."
+    ]
+},
+{ 
+    name: "Molecular Gastronomy Salad", 
+    description: "Experience texture and flavor like never before with this AI-designed salad.", 
+    image: "x86ckdn8uj701.jpg",
+    ingredients: ["Mixed greens", "AI-generated dressing", "Textured vegetables", "Edible flowers"],
+    steps: [
+        "Arrange mixed greens on a plate.",
+        "Add textured vegetables and edible flowers.",
+        "Drizzle AI-generated dressing over the salad.",
+        "Serve immediately and enjoy the flavors."
+    ]
+},
+{ 
+    name: "Neuro-Nutritional Smoothie", 
+    description: "Boost your brain power with this AI-optimized smoothie recipe.", 
+    image: "OIP (10).jpg",
+    ingredients: ["Banana", "Spinach", "AI-selected berries", "Almond milk", "Protein powder"],
+    steps: [
+        "Add all ingredients to a blender.",
+        "Blend until smooth and creamy.",
+        "Pour into a glass and enjoy.",
+        "Perfect for a quick, nutritious boost."
+    ]
+},
+// Add more recipes here
+];
+
+function loadRecipes() {
+const recipeGrid = document.getElementById('recipeGrid');
+
+recipeData.forEach((recipe, index) => {
+    const recipeCard = document.createElement('div');
+    recipeCard.className = 'bg-gradient p-6 rounded-lg shadow-xl transform transition duration-500 hover:scale-105';
+    recipeCard.innerHTML = `
+        <img src="${recipe.image}" alt="${recipe.name}" class="w-full h-48 object-cover rounded-lg mb-4">
+        <h3 class="text-xl font-semibold mb-2 text-background-color">${recipe.name}</h3>
+        <p class="text-background-color mb-4">${recipe.description}</p>
+        <div class="ingredients mb-4">
+            <h4 class="text-lg font-semibold text-background-color">Ingredients:</h4>
+            <ul class="text-background-color">
+                ${recipe.ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}
+            </ul>
+        </div>
+        <div class="steps">
+            <h4 class="text-lg font-semibold text-background-color">Steps:</h4>
+            <ol class="text-background-color">
+                ${recipe.steps.map(step => `<li>${step}</li>`).join('')}
+            </ol>
+        </div>
+    `;
+    recipeGrid.appendChild(recipeCard);
+
+    // Animate new recipe cards
+    gsap.from(recipeCard, {
+        opacity: 0,
+        y: 30,
+        duration: 0.5,
+        delay: index * 0.1
+    });
+});
+}
+
+// Load all recipes immediately when the page loads
+window.onload = loadRecipes;
+
+
+        
+       
+
+        // AI Chef Demo functionality
+        document.getElementById('aiChefDemo').addEventListener('click', function() {
+            // Implement AI Chef demo logic here
+            alert('AI Chef Demo: This feature would launch an interactive AI cooking assistant.');
+        });
+
+        // AR Cooking Demo functionality
+        document.getElementById('launchARDemo').addEventListener('click', function() {
+            // Implement AR demo logic here
+            alert('AR Cooking Guide: This feature would launch an augmented reality cooking tutorial.');
+        });
+
+        // Nutrition Analysis functionality
+        document.getElementById('analyzeNutrition').addEventListener('click', function() {
+            const ingredientList = document.getElementById('ingredientList').value;
+            const nutritionResult = document.getElementById('nutritionResult');
+            
+            // Simulate API call for nutrition analysis
+            setTimeout(() => {
+                nutritionResult.innerHTML = `
+                    <h3 class="text-xl font-semibold mb-4">Nutrition Analysis</h3>
+                    <ul class="space-y-2">
+                        <li><span class="font-semibold">Calories:</span> 450 kcal</li>
+                        <li><span class="font-semibold">Protein:</span> 25g</li>
+                        <li><span class="font-semibold">Carbs:</span> 55g</li>
+                        <li><span class="font-semibold">Fat:</span> 15g</li>
+                        <li><span class="font-semibold">Fiber:</span> 8g</li>
+                    </ul>
+                    <p class="mt-4 text-green-400">This meal is well-balanced and fits your daily nutritional goals!</p>
+                `;
+                nutritionResult.classList.remove('hidden');
+                
+                // Animate the result appearance
+                gsap.from(nutritionResult, {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.5
+                });
+            }, 1500);
+        });
+
+        // AI Sommelier functionality
+        document.getElementById('getPairing').addEventListener('click', function() {
+            const dish = document.getElementById('dishInput').value;
+            const pairingResult = document.getElementById('pairingResult');
+            
+            // Simulate API call for wine pairing
+            setTimeout(() => {
+                pairingResult.innerHTML = `
+                    <h3 class="text-xl font-semibold mb-4">Pairing Suggestion for ${dish}</h3>
+                    <p>Our AI Sommelier recommends a crisp Sauvignon Blanc to complement the flavors of your dish. The wine's bright acidity and herbal notes will enhance the overall dining experience.</p>
+                    <p class="mt-4 text-sm text-gray-400">Alternate options: Chardonnay (unoaked), Pinot Grigio</p>
+                `;
+                pairingResult.classList.remove('hidden');
+                
+                // Animate the result appearance
+                gsap.from(pairingResult, {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.5
+                });
+            }, 1500);
+        });
+
+        // Virtual Kitchen functionality
+        document.getElementById('enterVirtualKitchen').addEventListener('click', function() {
+            // Implement virtual kitchen logic here
+            alert('Virtual Kitchen: This feature would launch a 3D interactive virtual kitchen environment.');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Login button functionality
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            this.textContent = this.textContent === 'Login' ? 'Logout' : 'Login';
+            alert(this.textContent === 'Logout' ? 'You are now logged in!' : 'You have been logged out.');
+        });
+
+        // Initialize Barba.js for smooth page transitions
+        barba.init({
+            transitions: [{
+                name: 'opacity-transition',
+                leave(data) {
+                    return gsap.to(data.current.container, {
+                        opacity: 0
+                    });
+                },
+                enter(data) {
+                    return gsap.from(data.next.container, {
+                        opacity: 0
+                    });
+                }
+            }]
+        });
+
+        // ThreeJS for 3D background elements
+        function initThreeJSBackground() {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('hero-bg').appendChild(renderer.domElement);
+
+            const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+            const material = new THREE.MeshBasicMaterial({ color: 0x6c63ff, wireframe: true });
+            const torusKnot = new THREE.Mesh(geometry, material);
+            scene.add(torusKnot);
+
+            camera.position.z = 30;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                torusKnot.rotation.x += 0.01;
+                torusKnot.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Resize handler
+            window.addEventListener('resize', onWindowResize, false);
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+        }
+
+        initThreeJSBackground();
+    </script>
+</body>
+</html>
