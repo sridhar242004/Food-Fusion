@@ -1,264 +1,2270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Fusion Sushi Roll</title>
-    <style>
-    /* General Reset */
-body, h1, h2, h3, p, ul, li, form, input, textarea, button {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Fusion Atlas — An interactive cartography of culinary convergence">
+<title>FUSION ATLAS — Culinary Convergence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- ═══════════════════════════════════════════════════════════
+     CRITICAL IMAGE PRELOADS — Hero + Above-the-Fold Menu
+     All URLs must EXACTLY match the src used in markup
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Hero floating images (9 total) -->
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop&q=80" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1563379926898-05f4575a45d6?w=800&auto=format&fit=crop&q=80" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&auto=format&fit=crop&q=80" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1600894690592-b8b81b6e2c0e?w=800&auto=format&fit=crop&q=80" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1529692236671-f94f5c5f1b97?w=800&auto=format&fit=crop&q=80" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1606491956689-3ea1736c5a6e?w=800&auto=format&fit=crop&q=80" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&auto=format&fit=crop&q=80" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1544510802-688270a4e88c?w=800&auto=format&fit=crop&q=80" fetchpriority="high">
+
+<!-- Menu / Signature Dishes (8 cards) -->
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1476124369491-e3add6cb0202?w=800&auto=format&fit=crop&q=80" fetchpriority="high">
+
+<style>
+/* ============================================================
+   FUSION ATLAS v3.0 — Food Edition Design System
+   ============================================================ */
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
 }
 
-body {
-    background-color: #1a1a1a;
-    color: #e6e6e6;
-    line-height: 1.6;
-    position: relative;
+:root {
+  --void: #030305;
+  --surface: #08080f;
+  --elevated: #11111a;
+  --glass: rgba(17,17,26,0.55);
+  --glass-border: rgba(255,255,255,0.06);
+  --glass-highlight: rgba(255,255,255,0.12);
+
+  --coral: #ff6b35;
+  --teal: #2ec4b6;
+  --rose: #e71d36;
+  --gold: #ff9f1c;
+  --violet: #7b2cbf;
+  --mint: #3bceac;
+
+  --text: #f5f5f7;
+  --muted: #8a8a9e;
+  --faint: #4a4a5e;
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-elastic: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-smooth: cubic-bezier(0.45, 0, 0.55, 1);
+
+  --cursor-size: 12px;
+  --cursor-hover: 64px;
 }
 
-header {
-    background: #1a1a1a;
-    color: #e6e6e6;
-    padding: 10px 0;
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; background: var(--void); color: var(--text); }
+body { font-family: var(--font-body); background: var(--void); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+::selection { background: rgba(255,107,53,0.3); color: var(--text); }
+
+/* ============================================================
+   PRELOADER — Food Themed
+   ============================================================ */
+.preloader {
+  position: fixed; inset: 0; z-index: 99999; background: var(--void);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 0.8s var(--ease-out-expo), visibility 0.8s ease;
+}
+.preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+.preloader-kitchen {
+  display: flex; gap: 8px; margin-bottom: 40px; align-items: flex-end; height: 60px;
+}
+.preloader-kitchen span {
+  font-size: 2.5rem; display: inline-block; animation: kitchenBounce 1s ease-in-out infinite;
+}
+.preloader-kitchen span:nth-child(1) { animation-delay: 0s; }
+.preloader-kitchen span:nth-child(2) { animation-delay: 0.1s; }
+.preloader-kitchen span:nth-child(3) { animation-delay: 0.2s; }
+.preloader-kitchen span:nth-child(4) { animation-delay: 0.3s; }
+.preloader-kitchen span:nth-child(5) { animation-delay: 0.4s; }
+.preloader-kitchen span:nth-child(6) { animation-delay: 0.5s; }
+@keyframes kitchenBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+.preloader-text {
+  font-family: var(--font-display); font-size: clamp(1.5rem, 6vw, 4rem);
+  font-weight: 700; letter-spacing: -0.04em; line-height: 1; margin-bottom: 32px;
+}
+.preloader-text span {
+  display: inline-block; transform: translateY(100%);
+  animation: preloaderReveal 0.7s var(--ease-out-expo) forwards;
+}
+.preloader-text span:nth-child(1) { animation-delay: 0.3s; }
+.preloader-text span:nth-child(2) { animation-delay: 0.4s; }
+.preloader-text span:nth-child(3) { animation-delay: 0.5s; }
+.preloader-text span:nth-child(4) { animation-delay: 0.6s; }
+.preloader-text span:nth-child(5) { animation-delay: 0.7s; }
+.preloader-text span:nth-child(6) { animation-delay: 0.8s; }
+.preloader-text span:nth-child(7) { animation-delay: 0.9s; }
+.preloader-text span:nth-child(8) { animation-delay: 1.0s; }
+.preloader-text span:nth-child(9) { animation-delay: 1.1s; }
+.preloader-text span:nth-child(10) { animation-delay: 1.2s; }
+.preloader-text span:nth-child(11) { animation-delay: 1.3s; }
+@keyframes preloaderReveal { to { transform: translateY(0); } }
+.preloader-track {
+  width: 200px; height: 2px; background: var(--glass-border); border-radius: 2px;
+  overflow: hidden; position: relative;
+}
+.preloader-fill {
+  position: absolute; top: 0; left: 0; height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--coral), var(--teal), var(--rose));
+  animation: preloaderFill 2s var(--ease-out-expo) forwards; animation-delay: 0.5s;
+}
+@keyframes preloaderFill { to { width: 100%; } }
+.preloader-percent {
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted);
+  margin-top: 20px; letter-spacing: 4px;
 }
 
-header nav ul {
-    display: flex;
-    justify-content: center;
-    list-style: none;
+/* ============================================================
+   CURSOR
+   ============================================================ */
+.cursor {
+  position: fixed; top: 0; left: 0; width: var(--cursor-size); height: var(--cursor-size);
+  background: #fff; border-radius: 50%; pointer-events: none; z-index: 99998;
+  mix-blend-mode: difference; transform: translate(-50%, -50%);
+  transition: width 0.4s var(--ease-out-expo), height 0.4s var(--ease-out-expo), background 0.3s ease;
+  will-change: transform;
+}
+.cursor.hover {
+  width: var(--cursor-hover); height: var(--cursor-hover); background: transparent;
+  border: 1px solid rgba(255,255,255,0.6); mix-blend-mode: normal;
+}
+.cursor-trail {
+  position: fixed; top: 0; left: 0; width: 40px; height: 40px;
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 50%;
+  pointer-events: none; z-index: 99997; transform: translate(-50%, -50%);
+  transition: transform 0.5s var(--ease-out-expo), opacity 0.5s ease, width 0.3s ease, height 0.3s ease;
+  will-change: transform;
 }
 
-header nav ul li {
-    margin: 0 15px;
+/* ============================================================
+   NOISE & AMBIENT
+   ============================================================ */
+.noise {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9996; opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.ambient-light {
+  position: fixed; border-radius: 50%; filter: blur(150px); pointer-events: none;
+  z-index: 0; opacity: 0.25; animation: ambientDrift 20s ease-in-out infinite;
+}
+.ambient-light:nth-child(1) { width: 600px; height: 600px; background: var(--coral); top: -10%; left: -5%; animation-delay: 0s; }
+.ambient-light:nth-child(2) { width: 500px; height: 500px; background: var(--teal); bottom: -15%; right: -10%; animation-delay: -7s; }
+.ambient-light:nth-child(3) { width: 400px; height: 400px; background: var(--violet); top: 40%; left: 50%; animation-delay: -14s; }
+@keyframes ambientDrift {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(40px,-30px) scale(1.1); }
+  66% { transform: translate(-30px,40px) scale(0.95); }
 }
 
-header nav ul li a {
-    color: #b19cd9;
-    text-decoration: none;
-    font-weight: bold;
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.nav {
+  position: fixed; top: 24px; left: 50%; transform: translateX(-50%) translateY(-120%);
+  z-index: 1000; opacity: 0; transition: transform 0.8s var(--ease-out-expo), opacity 0.8s ease;
+}
+.nav.visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+.nav-dock {
+  display: flex; align-items: center; gap: 4px; padding: 8px 12px;
+  background: var(--glass); backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--glass-border); border-radius: 100px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 var(--glass-highlight);
+}
+.nav-brand {
+  font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; padding: 8px 16px;
+  border-right: 1px solid var(--glass-border); margin-right: 8px; color: var(--text);
+}
+.nav-link {
+  position: relative; padding: 8px 18px; color: var(--muted); text-decoration: none;
+  font-size: 0.8rem; font-weight: 500; border-radius: 100px;
+  transition: color 0.3s ease, background 0.3s ease; cursor: none; letter-spacing: 0.3px;
+}
+.nav-link:hover, .nav-link.active { color: var(--text); background: rgba(255,255,255,0.05); }
+.nav-indicator {
+  position: absolute; bottom: 4px; height: 2px;
+  background: linear-gradient(90deg, var(--coral), var(--teal));
+  border-radius: 2px; transition: all 0.5s var(--ease-elastic);
+  box-shadow: 0 0 10px rgba(255,107,53,0.3);
 }
 
+/* ============================================================
+   HERO — Food Floating Animation
+   ============================================================ */
 .hero {
-    background: url('fusion-sushi-roll-combining-elements-from-generative-ai_1169651-4562.jpg') no-repeat center center/cover;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #e6e6e6;
-    text-align: center;
+  position: relative; height: 100vh; width: 100%; display: flex;
+  align-items: center; justify-content: center; overflow: hidden; background: var(--void);
 }
-
-.hero-content h1 {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+.hero-canvas {
+  position: absolute; inset: 0; z-index: 1;
 }
-
-.hero-content p {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
+.hero-vignette {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 0%, var(--void) 75%);
 }
-
-.hero-content .btn {
-    padding: 10px 20px;
-    background: #b19cd9;
-    color: #1a1a1a;
-    text-decoration: none;
-    font-size: 1.2rem;
-    border-radius: 5px;
+.hero-content {
+  position: relative; z-index: 10; text-align: center; max-width: 1000px;
+  padding: 0 40px; pointer-events: none;
 }
-
-.about, .flavors, .contact, .process {
-    padding: 50px 20px;
-    text-align: center;
-    position: relative;
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 12px; padding: 10px 24px;
+  margin-bottom: 48px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+  border-radius: 100px; font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--muted); letter-spacing: 3px; text-transform: uppercase;
+  opacity: 0; transform: translateY(20px); animation: fadeUp 1s var(--ease-out-expo) 2.2s forwards;
+  pointer-events: auto;
 }
-
-.about img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-top: 20px;
+.hero-eyebrow::before {
+  content: ''; width: 6px; height: 6px; background: var(--coral); border-radius: 50%;
+  box-shadow: 0 0 12px var(--coral); animation: pulse 2s ease-in-out infinite;
 }
-
-.flavor-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.6); } }
+.hero-title {
+  font-family: var(--font-display); font-size: clamp(3rem, 10vw, 9rem);
+  font-weight: 700; line-height: 0.95; letter-spacing: -0.04em; margin-bottom: 32px; overflow: hidden;
 }
-
-.flavor-card {
-    background: #2e2e2e;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.hero-title .line { display: block; overflow: hidden; }
+.hero-title .word {
+  display: inline-block; opacity: 0; transform: translateY(110%) rotateX(-70deg);
+  transform-origin: center bottom; animation: wordReveal 1.2s var(--ease-out-expo) forwards;
 }
-
-.flavor-card h3 {
-    margin-bottom: 15px;
-    color: #b19cd9;
+.hero-title .line:nth-child(1) .word:nth-child(1) { animation-delay: 2.4s; }
+.hero-title .line:nth-child(1) .word:nth-child(2) { animation-delay: 2.55s; }
+.hero-title .line:nth-child(2) .word:nth-child(1) { animation-delay: 2.7s; }
+.hero-title .line:nth-child(2) .word:nth-child(2) { animation-delay: 2.85s; }
+.hero-title .line:nth-child(2) .word:nth-child(3) { animation-delay: 3.0s; }
+@keyframes wordReveal { to { opacity: 1; transform: translateY(0) rotateX(0deg); } }
+.hero-title .accent {
+  background: linear-gradient(135deg, var(--coral), var(--teal), var(--rose), var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  background-size: 200% 200%; animation: gradientShift 8s ease-in-out infinite;
 }
-
-.contact form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+@keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem); color: var(--muted); max-width: 540px;
+  margin: 0 auto 48px; line-height: 1.7; opacity: 0;
+  animation: fadeUp 1s var(--ease-out-expo) 3.2s forwards; pointer-events: auto;
 }
-
-.contact input, .contact textarea {
-    width: 100%;
-    max-width: 500px;
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background: #2e2e2e;
-    color: #e6e6e6;
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 14px; padding: 18px 40px;
+  background: var(--text); color: var(--void); text-decoration: none;
+  font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+  border-radius: 100px; position: relative; overflow: hidden; opacity: 0;
+  animation: fadeUp 1s var(--ease-out-expo) 3.4s forwards;
+  transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s ease;
+  box-shadow: 0 4px 30px rgba(255,255,255,0.1); cursor: none; pointer-events: auto;
 }
-
-.contact button {
-    padding: 10px 20px;
-    background: #b19cd9;
-    color: #1a1a1a;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.hero-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(255,255,255,0.15); }
+.hero-cta svg { transition: transform 0.3s var(--ease-out-expo); }
+.hero-cta:hover svg { transform: translateX(4px); }
+.hero-scroll {
+  position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%); z-index: 10;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  opacity: 0; animation: fadeUp 1s var(--ease-out-expo) 3.8s forwards; pointer-events: auto;
 }
-
-footer {
-    background: #1a1a1a;
-    color: #e6e6e6;
-    padding: 10px 0;
-    text-align: center;
+.hero-scroll span {
+  font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--faint);
 }
-
-.process h2 {
-    margin-bottom: 30px;
-    background: linear-gradient(45deg, #b19cd9, #1a1a1a);
-    -webkit-background-clip: text;
-    color: transparent;
-    text-shadow: none;
+.hero-scroll-line {
+  width: 1px; height: 80px; background: linear-gradient(to bottom, var(--faint), transparent);
+  position: relative; overflow: hidden;
 }
+.hero-scroll-line::after {
+  content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(to bottom, transparent, var(--text), transparent);
+  animation: scrollLine 2.5s ease-in-out infinite;
+}
+@keyframes scrollLine { to { top: 100%; } }
 
+/* Floating Food Images in Hero */
+.hero-food-float {
+  position: absolute; z-index: 5; pointer-events: none;
+  border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  border: 1px solid var(--glass-border); opacity: 0.85;
+  transition: transform 0.3s ease-out, opacity 0.3s ease;
+  will-change: transform;
+}
+.hero-food-float img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.hero-food-float:nth-child(1) { width: 180px; height: 240px; top: 15%; left: 8%; animation: float1 8s ease-in-out infinite; }
+.hero-food-float:nth-child(2) { width: 160px; height: 160px; top: 60%; left: 5%; animation: float2 10s ease-in-out infinite; animation-delay: -2s; }
+.hero-food-float:nth-child(3) { width: 200px; height: 150px; top: 10%; right: 10%; animation: float3 9s ease-in-out infinite; animation-delay: -4s; }
+.hero-food-float:nth-child(4) { width: 150px; height: 200px; top: 55%; right: 8%; animation: float4 11s ease-in-out infinite; animation-delay: -1s; }
+.hero-food-float:nth-child(5) { width: 140px; height: 140px; top: 30%; left: 25%; animation: float5 7s ease-in-out infinite; animation-delay: -3s; opacity: 0.6; }
+.hero-food-float:nth-child(6) { width: 170px; height: 130px; top: 70%; right: 25%; animation: float6 12s ease-in-out infinite; animation-delay: -5s; opacity: 0.7; }
+.hero-food-float:nth-child(7) { width: 130px; height: 180px; top: 20%; right: 30%; animation: float1 9s ease-in-out infinite; animation-delay: -6s; opacity: 0.5; }
+.hero-food-float:nth-child(8) { width: 160px; height: 120px; bottom: 15%; left: 15%; animation: float3 8s ease-in-out infinite; animation-delay: -2.5s; opacity: 0.65; }
+
+@keyframes float1 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(2deg); } }
+@keyframes float2 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(15px) rotate(-2deg); } }
+@keyframes float3 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-25px) rotate(3deg); } }
+@keyframes float4 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(18px) rotate(-3deg); } }
+@keyframes float5 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
+@keyframes float6 { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(22px) rotate(-1deg); } }
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+.marquee {
+  padding: 28px 0; background: var(--surface);
+  border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);
+  overflow: hidden; position: relative;
+}
+.marquee-track {
+  display: flex; width: max-content; animation: marquee 40s linear infinite;
+}
+.marquee-item {
+  display: flex; align-items: center; gap: 48px; padding: 0 24px;
+  font-family: var(--font-display); font-size: 1.1rem; font-weight: 600;
+  color: var(--faint); text-transform: uppercase; letter-spacing: 2px; white-space: nowrap;
+}
+.marquee-item span { color: var(--text); }
+.marquee-dot { width: 4px; height: 4px; background: var(--coral); border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 8px var(--coral); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+section { position: relative; z-index: 2; }
+.section-label {
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);
+  letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 16px;
+}
+.section-label::before { content: ''; width: 32px; height: 1px; background: var(--faint); }
+.section-title {
+  font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 4.5rem);
+  font-weight: 700; line-height: 1.05; letter-spacing: -0.03em;
+}
+.section-title .gradient {
+  background: linear-gradient(135deg, var(--coral), var(--teal), var(--rose));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  background-size: 200% auto; animation: gradientShift 6s ease-in-out infinite;
+}
+.container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+
+/* ============================================================
+   MANIFESTO
+   ============================================================ */
+.manifesto { padding: 160px 0; background: var(--void); overflow: hidden; }
+.manifesto-text {
+  font-family: var(--font-display); font-size: clamp(1.8rem, 4.5vw, 4rem);
+  font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; max-width: 1000px;
+}
+.manifesto-text .line { display: block; overflow: hidden; opacity: 0; transform: translateY(60px); transition: all 1s var(--ease-out-expo); }
+.manifesto-text .line.visible { opacity: 1; transform: translateY(0); }
+.manifesto-text .highlight { color: var(--coral); transition: color 0.3s ease; }
+
+/* ============================================================
+   GLOBE
+   ============================================================ */
+.globe-section { padding: 160px 0; background: var(--surface); overflow: hidden; }
+.globe-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.globe-visual {
+  position: relative; height: 500px; display: flex; align-items: center; justify-content: center; perspective: 1000px;
+}
+.globe-sphere {
+  width: 320px; height: 320px; position: relative; transform-style: preserve-3d;
+  animation: globeRotate 30s linear infinite;
+}
+@keyframes globeRotate { from { transform: rotateY(0deg) rotateX(15deg); } to { transform: rotateY(360deg) rotateX(15deg); } }
+.globe-dot {
+  position: absolute; width: 6px; height: 6px; background: var(--muted); border-radius: 50%;
+  top: 50%; left: 50%; transform-style: preserve-3d;
+}
+.globe-dot.active { background: var(--coral); box-shadow: 0 0 12px var(--coral); animation: dotPulse 2s ease-in-out infinite; }
+@keyframes dotPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.globe-ring {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  border: 1px solid var(--glass-border); border-radius: 50%; pointer-events: none;
+}
+.globe-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+.globe-stat {
+  padding: 32px; background: var(--elevated); border: 1px solid var(--glass-border);
+  border-radius: 16px; transition: all 0.5s var(--ease-out-expo);
+}
+.globe-stat:hover { transform: translateY(-6px); border-color: var(--glass-highlight); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+.globe-stat-value {
+  font-family: var(--font-mono); font-size: 2.4rem; font-weight: 700; line-height: 1; margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--coral), var(--teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.globe-stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* ============================================================
+   DISHES MENU — Preloaded Gallery
+   ============================================================ */
+.dishes-section { padding: 160px 0; background: var(--void); position: relative; overflow: hidden; }
+.dishes-section::before {
+  content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 800px; height: 800px; background: radial-gradient(circle, rgba(255,107,53,0.04), transparent 70%);
+  pointer-events: none;
+}
+.dishes-header { text-align: center; max-width: 600px; margin: 0 auto 80px; }
+.dishes-header .section-label { justify-content: center; }
+.dishes-header .section-label::before { display: none; }
+.dishes-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+}
+.dish-card {
+  position: relative; border-radius: 20px; overflow: hidden;
+  background: var(--elevated); border: 1px solid var(--glass-border);
+  transition: all 0.5s var(--ease-out-expo); cursor: none;
+  transform-style: preserve-3d;
+}
+.dish-card:hover {
+  transform: translateY(-8px) scale(1.02); border-color: var(--glass-highlight);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.5);
+}
+.dish-card-image {
+  width: 100%; height: 220px; overflow: hidden; position: relative;
+}
+.dish-card-image img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+.dish-card:hover .dish-card-image img { transform: scale(1.1); }
+.dish-card-image::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, var(--elevated), transparent 60%);
+  pointer-events: none;
+}
+.dish-card-badge {
+  position: absolute; top: 12px; left: 12px; z-index: 3;
+  padding: 6px 12px; border-radius: 100px; font-family: var(--font-mono);
+  font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 700;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); color: var(--text);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.dish-card-info { padding: 24px; position: relative; z-index: 2; }
+.dish-card-info h4 {
+  font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+  margin-bottom: 6px; color: var(--text);
+}
+.dish-card-info .dish-origin {
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted);
+  letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; display: block;
+}
+.dish-card-info p {
+  font-size: 0.85rem; color: var(--muted); line-height: 1.6;
+}
+.dish-card-meta {
+  display: flex; gap: 16px; margin-top: 16px; padding-top: 16px;
+  border-top: 1px solid var(--glass-border);
+}
+.dish-card-meta span {
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--faint);
+  display: flex; align-items: center; gap: 6px;
+}
+.dish-card-meta span svg { width: 14px; height: 14px; }
+
+/* ============================================================
+   HOW IT'S MADE — Cooking Process
+   ============================================================ */
+.process-section { padding: 160px 0; background: var(--surface); position: relative; overflow: hidden; }
+.process-section::before {
+  content: ''; position: absolute; top: 0; right: 0; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(46,196,182,0.05), transparent 70%); pointer-events: none;
+}
+.process-header { max-width: 700px; margin-bottom: 80px; }
+.process-header .section-title { margin-bottom: 24px; }
+.process-header p { font-size: 1.15rem; color: var(--muted); line-height: 1.8; }
+.process-tabs {
+  display: flex; gap: 12px; margin-bottom: 48px; flex-wrap: wrap;
+}
+.process-tab {
+  padding: 12px 24px; background: var(--elevated); border: 1px solid var(--glass-border);
+  border-radius: 100px; font-family: var(--font-mono); font-size: 0.8rem;
+  color: var(--muted); cursor: none; transition: all 0.35s ease; outline: none;
+}
+.process-tab:hover, .process-tab.active {
+  background: rgba(255,255,255,0.06); border-color: var(--glass-highlight);
+  color: var(--text); box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.process-content { display: none; }
+.process-content.active { display: block; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .process-steps {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
 }
-
 .process-step {
-    background: #2e2e2e;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 600px;
+  background: var(--elevated); border: 1px solid var(--glass-border); border-radius: 24px;
+  overflow: hidden; transition: all 0.5s var(--ease-out-expo); position: relative;
+}
+.process-step:hover {
+  transform: translateY(-6px); border-color: var(--glass-highlight);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.process-step-image {
+  width: 100%; height: 200px; overflow: hidden; position: relative;
+}
+.process-step-image img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s var(--ease-out-expo);
+}
+.process-step:hover .process-step-image img { transform: scale(1.08); }
+.process-step-number {
+  position: absolute; top: 12px; left: 12px; z-index: 3;
+  width: 36px; height: 36px; border-radius: 50%; background: var(--coral);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--void);
+  box-shadow: 0 4px 12px rgba(255,107,53,0.3);
+}
+.process-step-info { padding: 28px; }
+.process-step-info h4 {
+  font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+  margin-bottom: 10px; color: var(--text);
+}
+.process-step-info p {
+  font-size: 0.9rem; color: var(--muted); line-height: 1.7;
+}
+.process-step-time {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 16px;
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--faint);
+  padding: 6px 12px; background: rgba(255,255,255,0.03); border-radius: 100px;
+  border: 1px solid var(--glass-border);
+}
+.process-step-time svg { width: 12px; height: 12px; }
+
+/* ============================================================
+   GALLERY — Horizontal Scroll
+   ============================================================ */
+.gallery-section { position: relative; height: 400vh; background: var(--void); }
+.gallery-sticky {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+  display: flex; align-items: center;
+}
+.gallery-header {
+  position: absolute; top: 60px; left: 48px; z-index: 10; max-width: 500px;
+}
+.gallery-track {
+  display: flex; gap: 40px; padding: 0 48px;
+  will-change: transform; transform-style: preserve-3d;
+}
+.fusion-card {
+  flex-shrink: 0; width: 420px; height: 580px; background: var(--elevated);
+  border: 1px solid var(--glass-border); border-radius: 28px; padding: 44px;
+  position: relative; overflow: hidden; transform-style: preserve-3d;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; cursor: none;
+}
+.fusion-card:hover { border-color: var(--glass-highlight); box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+.fusion-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.04), transparent 50%);
+  opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+}
+.fusion-card:hover::before { opacity: 1; }
+.fusion-card-number {
+  font-family: var(--font-mono); font-size: 4.5rem; font-weight: 700; line-height: 1;
+  margin-bottom: 24px; opacity: 0.08; transition: opacity 0.3s ease;
+}
+.fusion-card:hover .fusion-card-number { opacity: 0.2; }
+.fusion-card-flag { display: flex; gap: 8px; margin-bottom: 20px; }
+.fusion-card-flag span {
+  padding: 6px 14px; border-radius: 100px; font-family: var(--font-mono);
+  font-size: 0.68rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; border: 1px solid;
+}
+.fusion-card h3 { font-family: var(--font-display); font-size: 1.9rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.02em; }
+.fusion-card p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
+.fusion-dishes { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.fusion-dish {
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+  background: rgba(255,255,255,0.015); border: 1px solid var(--glass-border);
+  border-radius: 12px; font-size: 0.85rem; color: var(--muted); transition: all 0.3s ease;
+}
+.fusion-dish:hover { background: rgba(255,255,255,0.03); border-color: var(--glass-highlight); color: var(--text); }
+.fusion-dish-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.fusion-visual {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 180px;
+  display: flex; align-items: flex-end; justify-content: center; padding-bottom: 44px; pointer-events: none;
+}
+.fusion-visual svg { width: 160px; height: 160px; opacity: 0.1; transition: all 0.6s var(--ease-out-expo); }
+.fusion-card:hover .fusion-visual svg { opacity: 0.25; transform: scale(1.1) translateY(-8px); }
+
+/* Card Themes */
+.card-texmex .fusion-card-number { color: var(--coral); }
+.card-texmex .fusion-card-flag span { background: rgba(255,107,53,0.08); color: var(--coral); border-color: rgba(255,107,53,0.15); }
+.card-texmex h3 { color: var(--coral); }
+.card-texmex .fusion-dish-dot { background: var(--coral); box-shadow: 0 0 8px var(--coral); }
+
+.card-nikkei .fusion-card-number { color: var(--teal); }
+.card-nikkei .fusion-card-flag span { background: rgba(46,196,182,0.08); color: var(--teal); border-color: rgba(46,196,182,0.15); }
+.card-nikkei h3 { color: var(--teal); }
+.card-nikkei .fusion-dish-dot { background: var(--teal); box-shadow: 0 0 8px var(--teal); }
+
+.card-koreanmex .fusion-card-number { color: var(--rose); }
+.card-koreanmex .fusion-card-flag span { background: rgba(231,29,54,0.08); color: var(--rose); border-color: rgba(231,29,54,0.15); }
+.card-koreanmex h3 { color: var(--rose); }
+.card-koreanmex .fusion-dish-dot { background: var(--rose); box-shadow: 0 0 8px var(--rose); }
+
+.card-chifa .fusion-card-number { color: var(--gold); }
+.card-chifa .fusion-card-flag span { background: rgba(255,159,28,0.08); color: var(--gold); border-color: rgba(255,159,28,0.15); }
+.card-chifa h3 { color: var(--gold); }
+.card-chifa .fusion-dish-dot { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+
+.card-banhmi .fusion-card-number { color: var(--violet); }
+.card-banhmi .fusion-card-flag span { background: rgba(123,44,191,0.08); color: var(--violet); border-color: rgba(123,44,191,0.15); }
+.card-banhmi h3 { color: var(--violet); }
+.card-banhmi .fusion-dish-dot { background: var(--violet); box-shadow: 0 0 8px var(--violet); }
+
+.card-indochinese .fusion-card-number { color: #ff4757; }
+.card-indochinese .fusion-card-flag span { background: rgba(255,71,87,0.08); color: #ff4757; border-color: rgba(255,71,87,0.15); }
+.card-indochinese h3 { color: #ff4757; }
+.card-indochinese .fusion-dish-dot { background: #ff4757; box-shadow: 0 0 8px #ff4757; }
+
+.card-capemalay .fusion-card-number { color: #ffa502; }
+.card-capemalay .fusion-card-flag span { background: rgba(255,165,2,0.08); color: #ffa502; border-color: rgba(255,165,2,0.15); }
+.card-capemalay h3 { color: #ffa502; }
+.card-capemalay .fusion-dish-dot { background: #ffa502; box-shadow: 0 0 8px #ffa502; }
+
+.card-italjap .fusion-card-number { color: var(--mint); }
+.card-italjap .fusion-card-flag span { background: rgba(59,206,172,0.08); color: var(--mint); border-color: rgba(59,206,172,0.15); }
+.card-italjap h3 { color: var(--mint); }
+.card-italjap .fusion-dish-dot { background: var(--mint); box-shadow: 0 0 8px var(--mint); }
+
+.gallery-progress {
+  position: absolute; bottom: 48px; left: 48px; right: 48px; height: 2px;
+  background: rgba(255,255,255,0.04); border-radius: 2px; overflow: hidden;
+}
+.gallery-progress-bar {
+  height: 100%; background: linear-gradient(90deg, var(--coral), var(--teal), var(--rose));
+  border-radius: 2px; width: 0%; transition: width 0.1s linear;
+  box-shadow: 0 0 10px rgba(255,107,53,0.2);
 }
 
-.process-step h3 {
-    margin-bottom: 15px;
-    color: #b19cd9;
+/* ============================================================
+   ALCHEMY LAB
+   ============================================================ */
+.alchemy-section { padding: 160px 0; background: var(--surface); overflow: hidden; }
+.alchemy-header { text-align: center; max-width: 600px; margin: 0 auto 80px; }
+.alchemy-header .section-label { justify-content: center; }
+.alchemy-header .section-label::before { display: none; }
+.alchemy-interface {
+  background: var(--elevated); border: 1px solid var(--glass-border); border-radius: 32px;
+  padding: 64px 48px; position: relative; overflow: hidden; max-width: 1000px; margin: 0 auto;
 }
-
-.process-step p {
-    color: #b3b3b3;
+.alchemy-interface::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.02), transparent 60%);
+  pointer-events: none;
 }
-
-.custom-shape-divider-bottom-1627925439 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
+.alchemy-slots {
+  display: flex; align-items: center; justify-content: center; gap: 32px;
+  margin-bottom: 48px; flex-wrap: wrap; position: relative; z-index: 2;
 }
-
-.custom-shape-divider-bottom-1627925439 svg {
-    position: relative;
-    display: block;
-    width: calc(300% + 1.3px);
-    height: 150px;
+.alchemy-slot {
+  width: 180px; height: 180px; border-radius: 24px; background: rgba(255,255,255,0.015);
+  border: 2px dashed var(--glass-border); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  transition: all 0.5s var(--ease-out-expo); cursor: none; position: relative;
 }
-
-.custom-shape-divider-bottom-1627925439 .shape-fill {
-    fill: #1a1a1a;
+.alchemy-slot:hover { border-color: var(--glass-highlight); background: rgba(255,255,255,0.025); }
+.alchemy-slot.filled { border-style: solid; border-color: var(--glass-highlight); background: rgba(255,255,255,0.03); }
+.alchemy-slot .slot-icon { font-size: 2.5rem; opacity: 0.3; transition: all 0.4s ease; }
+.alchemy-slot.filled .slot-icon { opacity: 1; transform: scale(1.2); }
+.alchemy-slot .slot-label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--faint); letter-spacing: 2px; text-transform: uppercase; }
+.alchemy-slot .slot-value { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text); opacity: 0; transform: translateY(8px); transition: all 0.4s var(--ease-out-expo); }
+.alchemy-slot.filled .slot-value { opacity: 1; transform: translateY(0); }
+.alchemy-plus, .alchemy-equals { font-family: var(--font-display); font-size: 2rem; color: var(--faint); font-weight: 200; }
+.alchemy-result {
+  min-width: 260px; padding: 32px;
+  background: linear-gradient(135deg, rgba(255,107,53,0.06), rgba(46,196,182,0.06));
+  border: 1px solid var(--glass-highlight); border-radius: 24px; opacity: 0;
+  transform: scale(0.9) translateY(10px); transition: all 0.6s var(--ease-out-expo);
+  pointer-events: none; text-align: center;
 }
+.alchemy-result.visible { opacity: 1; transform: scale(1) translateY(0); pointer-events: all; }
+.alchemy-result h4 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+.alchemy-result p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+.alchemy-ingredients {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+  margin-top: 48px; position: relative; z-index: 2;
+}
+.alchemy-ingredient {
+  padding: 14px 28px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+  border-radius: 100px; font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted);
+  cursor: none; transition: all 0.35s var(--ease-out-expo); position: relative; overflow: hidden; outline: none;
+}
+.alchemy-ingredient:hover { border-color: var(--glass-highlight); color: var(--text); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); background: rgba(255,255,255,0.04); }
+.alchemy-ingredient.selected { background: rgba(255,255,255,0.08); border-color: var(--text); color: var(--text); box-shadow: 0 0 20px rgba(255,255,255,0.06); transform: translateY(-3px); }
+.alchemy-particles { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
 
-    </style>
+/* ============================================================
+   ORIGINS TIMELINE
+   ============================================================ */
+.origins-section { padding: 160px 0; background: var(--void); position: relative; }
+.origins-header { text-align: center; margin-bottom: 120px; }
+.origins-header .section-label { justify-content: center; }
+.origins-header .section-label::before { display: none; }
+.origins-timeline { position: relative; max-width: 900px; margin: 0 auto; padding: 0 48px; }
+.origins-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--coral), var(--teal), var(--rose)); opacity: 0.2; transform: translateX(-50%); }
+.origins-step { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 100px; position: relative; }
+.origins-step:nth-child(even) { direction: rtl; }
+.origins-step:nth-child(even) > * { direction: ltr; }
+.origins-step:last-child { margin-bottom: 0; }
+.origins-node { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 48px; height: 48px; background: var(--elevated); border: 1px solid var(--glass-highlight); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-weight: 700; font-size: 0.8rem; color: var(--muted); z-index: 10; transition: all 0.5s var(--ease-elastic); box-shadow: 0 0 20px rgba(0,0,0,0.3); }
+.origins-step.active .origins-node { transform: translate(-50%, -50%) scale(1.2); border-color: var(--coral); color: var(--coral); box-shadow: 0 0 30px rgba(255,107,53,0.15); }
+.origins-content { padding: 36px; background: var(--elevated); border: 1px solid var(--glass-border); border-radius: 24px; position: relative; overflow: hidden; transition: all 0.6s var(--ease-out-expo); opacity: 0; transform: translateX(-40px); }
+.origins-step:nth-child(even) .origins-content { transform: translateX(40px); }
+.origins-step.active .origins-content { opacity: 1; transform: translateX(0); border-color: var(--glass-highlight); box-shadow: 0 16px 50px rgba(0,0,0,0.3); }
+.origins-year { font-family: var(--font-mono); font-size: 0.75rem; color: var(--coral); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+.origins-content h3 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+.origins-content p { font-size: 0.95rem; color: var(--muted); line-height: 1.75; }
+.origins-visual { display: flex; align-items: center; justify-content: center; height: 260px; background: radial-gradient(circle at center, rgba(255,255,255,0.02), transparent 70%); border-radius: 24px; opacity: 0; transform: scale(0.9); transition: all 0.8s var(--ease-out-expo); }
+.origins-step.active .origins-visual { opacity: 1; transform: scale(1); }
+.origins-visual svg { width: 180px; height: 180px; }
+
+/* ============================================================
+   FLAVOR RADAR
+   ============================================================ */
+.radar-section { padding: 160px 0; background: var(--surface); overflow: hidden; }
+.radar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.radar-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
+.radar-btn { padding: 10px 20px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 100px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); cursor: none; transition: all 0.3s ease; outline: none; }
+.radar-btn:hover, .radar-btn.active { background: rgba(255,255,255,0.06); border-color: var(--glass-highlight); color: var(--text); }
+.radar-canvas-wrap { position: relative; height: 450px; display: flex; align-items: center; justify-content: center; }
+#radarCanvas { width: 100%; max-width: 400px; height: auto; }
+
+/* ============================================================
+   INGREDIENT NETWORK
+   ============================================================ */
+.network-section { padding: 160px 0; background: var(--void); overflow: hidden; }
+.network-header { text-align: center; max-width: 600px; margin: 0 auto 80px; }
+.network-header .section-label { justify-content: center; }
+.network-header .section-label::before { display: none; }
+.network-viz { position: relative; height: 500px; max-width: 900px; margin: 0 auto; }
+.network-viz svg { width: 100%; height: 100%; }
+.network-node { cursor: none; transition: all 0.4s var(--ease-out-expo); }
+.network-node:hover { filter: drop-shadow(0 0 8px currentColor); transform: scale(1.3); }
+.network-line { stroke-dasharray: 4 4; animation: dashFlow 20s linear infinite; }
+@keyframes dashFlow { to { stroke-dashoffset: -100; } }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact-section { padding: 160px 0; background: var(--surface); position: relative; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.contact-info h2 { font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 700; margin-bottom: 28px; line-height: 1.05; }
+.contact-info > p { font-size: 1.1rem; color: var(--muted); line-height: 1.8; margin-bottom: 48px; }
+.contact-links { display: flex; flex-direction: column; gap: 16px; }
+.contact-link { display: flex; align-items: center; gap: 16px; padding: 20px 24px; background: var(--elevated); border: 1px solid var(--glass-border); border-radius: 16px; text-decoration: none; color: var(--text); transition: all 0.5s var(--ease-out-expo); cursor: none; }
+.contact-link:hover { border-color: var(--glass-highlight); transform: translateX(12px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+.contact-link-icon { width: 48px; height: 48px; background: rgba(255,255,255,0.02); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--muted); flex-shrink: 0; transition: all 0.3s ease; }
+.contact-link:hover .contact-link-icon { color: var(--text); background: rgba(255,255,255,0.04); }
+.contact-link-text { font-size: 0.95rem; font-weight: 500; }
+.contact-link-text span { display: block; font-size: 0.78rem; color: var(--faint); margin-top: 4px; }
+.contact-form { background: var(--elevated); border: 1px solid var(--glass-border); border-radius: 24px; padding: 48px; position: relative; overflow: hidden; transition: transform 0.1s ease-out; }
+.contact-form::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.03), transparent 50%); pointer-events: none; }
+.form-group { position: relative; margin-bottom: 32px; }
+.form-group input, .form-group textarea { width: 100%; padding: 16px 0; background: transparent; border: none; border-bottom: 1px solid var(--glass-border); color: var(--text); font-family: var(--font-body); font-size: 1rem; outline: none; transition: border-color 0.3s ease; cursor: none; }
+.form-group textarea { min-height: 120px; resize: vertical; }
+.form-group input:focus, .form-group textarea:focus { border-color: var(--text); }
+.form-group label { position: absolute; left: 0; top: 16px; color: var(--faint); font-size: 1rem; pointer-events: none; transition: all 0.35s var(--ease-out-expo); }
+.form-group input:focus + label, .form-group input:not(:placeholder-shown) + label, .form-group textarea:focus + label, .form-group textarea:not(:placeholder-shown) + label { top: -14px; font-size: 0.72rem; color: var(--text); letter-spacing: 1px; text-transform: uppercase; }
+.form-group .form-line { position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--coral), var(--teal), var(--rose)); transition: width 0.5s var(--ease-out-expo); }
+.form-group input:focus ~ .form-line, .form-group textarea:focus ~ .form-line { width: 100%; }
+.form-submit { width: 100%; padding: 20px; background: var(--text); color: var(--void); border: none; border-radius: 14px; font-family: var(--font-display); font-size: 1rem; font-weight: 700; cursor: none; position: relative; overflow: hidden; transition: all 0.35s var(--ease-out-expo); box-shadow: 0 4px 24px rgba(255,255,255,0.08); }
+.form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,255,255,0.12); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer { padding: 80px 0 32px; background: var(--void); border-top: 1px solid var(--glass-border); position: relative; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 64px; }
+.footer-brand { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: var(--text); margin-bottom: 16px; letter-spacing: 2px; }
+.footer-desc { font-size: 0.9rem; color: var(--faint); line-height: 1.8; max-width: 300px; }
+.footer-links h4 { font-size: 0.75rem; font-weight: 600; color: var(--text); margin-bottom: 24px; letter-spacing: 2px; text-transform: uppercase; }
+.footer-links a { display: block; color: var(--faint); text-decoration: none; font-size: 0.88rem; margin-bottom: 12px; transition: color 0.3s ease, transform 0.3s ease; cursor: none; }
+.footer-links a:hover { color: var(--text); transform: translateX(4px); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 32px; border-top: 1px solid var(--glass-border); }
+.footer-copyright { font-family: var(--font-mono); font-size: 0.72rem; color: var(--faint); letter-spacing: 1px; }
+.footer-social { display: flex; gap: 14px; }
+.footer-social a { width: 42px; height: 42px; background: var(--elevated); border: 1px solid var(--glass-border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--faint); text-decoration: none; transition: all 0.35s ease; cursor: none; }
+.footer-social a:hover { color: var(--text); border-color: var(--glass-highlight); transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+/* ============================================================
+   REVEAL ANIMATIONS
+   ============================================================ */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s var(--ease-out-expo); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-60px); transition: all 0.9s var(--ease-out-expo); }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(60px); transition: all 0.9s var(--ease-out-expo); }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+.reveal-scale { opacity: 0; transform: scale(0.9); transition: all 0.9s var(--ease-out-expo); }
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+/* ============================================================
+   SCROLL PROGRESS
+   ============================================================ */
+.scroll-progress { position: fixed; top: 0; left: 0; width: 100%; height: 2px; z-index: 10001; background: transparent; }
+.scroll-progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--coral), var(--teal), var(--rose)); box-shadow: 0 0 10px rgba(255,107,53,0.2); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1200px) {
+  .dishes-grid { grid-template-columns: repeat(3, 1fr); }
+  .process-steps { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 1024px) {
+  .globe-grid, .contact-grid, .radar-grid { grid-template-columns: 1fr; gap: 60px; }
+  .globe-visual { order: -1; height: 350px; }
+  .origins-step { grid-template-columns: 1fr; gap: 32px; }
+  .origins-step:nth-child(even) { direction: ltr; }
+  .origins-node { display: none; }
+  .origins-line { display: none; }
+  .origins-content { transform: translateX(0) !important; opacity: 1; }
+  .origins-visual { opacity: 1; transform: scale(1); }
+  .gallery-section { height: auto; }
+  .gallery-sticky { position: relative; height: auto; overflow-x: auto; padding: 40px 0; }
+  .gallery-track { padding: 0 32px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .alchemy-slots { flex-direction: column; }
+  .alchemy-plus, .alchemy-equals { transform: rotate(90deg); }
+  .dishes-grid { grid-template-columns: repeat(2, 1fr); }
+  .process-steps { grid-template-columns: 1fr; }
+  .hero-food-float { display: none; }
+}
+@media (max-width: 768px) {
+  .container { padding: 0 24px; }
+  .nav-dock { padding: 6px 8px; }
+  .nav-link { padding: 6px 10px; font-size: 0.72rem; }
+  .fusion-card { width: 300px; height: auto; padding: 32px; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 24px; text-align: center; }
+  .dishes-grid { grid-template-columns: 1fr; }
+  body { cursor: auto; }
+  .cursor, .cursor-trail, .preloader { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .marquee-track { animation: none; }
+  .globe-sphere { animation: none; }
+  .hero-food-float { animation: none; }
+}
+</style>
+<base target="_blank">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="/foodapp.html">Home</a></li>
-    </ul>
-        </nav>
-    </header>
 
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>AI-Fusion Sushi Roll</h1>
-            <p>A unique blend of traditional sushi with AI-suggested flavor combinations.</p>
-            <a href="#about" class="btn">Learn More</a>
-        </div>
-    </section>
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+  <div class="preloader-kitchen">
+    <span>🍳</span><span>🔥</span><span>🌶️</span><span>🍜</span><span>🥢</span><span>🌮</span>
+  </div>
+  <div class="preloader-text">
+    <span>F</span><span>U</span><span>S</span><span>I</span><span>O</span><span>N</span>
+    <span> </span>
+    <span>A</span><span>T</span><span>L</span><span>A</span><span>S</span>
+  </div>
+  <div class="preloader-track"><div class="preloader-fill"></div></div>
+  <div class="preloader-percent" id="preloaderPercent">0%</div>
+</div>
 
-    <section id="about" class="about">
-        <div class="content">
-            <h2>About the AI-Fusion Sushi Roll</h2>
-            <p>The AI-Fusion Sushi Roll combines the best of traditional sushi with cutting-edge AI flavor pairing technology. Experience a new level of culinary creativity with each bite.</p>
-            <img src="fusion-sushi-roll-combining-elements-from-generative-ai_1169651-4562.jpg" alt="AI-Fusion Sushi Roll">
-        </div>
-    </section>
+<!-- Noise & Ambient -->
+<div class="noise"></div>
+<div class="ambient-light"></div>
+<div class="ambient-light"></div>
+<div class="ambient-light"></div>
 
-    <section id="flavors" class="flavors">
-        <h2>Flavor Combinations</h2>
-        <div class="flavor-grid">
-            <div class="flavor-card">
-                <h3>Classic Meets Futuristic</h3>
-                <p>A perfect balance of traditional ingredients like tuna and rice, paired with AI-suggested elements like truffle oil and citrus zest.</p>
-            </div>
-            <div class="flavor-card">
-                <h3>Spicy AI-Twist</h3>
-                <p>A bold combination of spicy tuna, avocado, and a hint of AI-recommended mango, giving a sweet and spicy kick.</p>
-            </div>
-            <div class="flavor-card">
-                <h3>AI-Enhanced Umami</h3>
-                <p>Combining soy sauce-marinated salmon with AI-suggested umami enhancers like mushrooms and miso paste.</p>
-            </div>
-            <div class="flavor-card">
-                <h3>Sweet & Savory Harmony</h3>
-                <p>A delightful mix of sweet eel, cucumber, and AI-paired savory notes of sesame and soy.</p>
-            </div>
-        </div>
-    </section>
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
 
-    <section id="process" class="process">
-        <h2>Our Process</h2>
-        <div class="process-steps">
-            <div class="process-step">
-                <h3>Step 1: Ingredient Selection</h3>
-                <p>We start by selecting the freshest ingredients, combining traditional sushi elements with AI-suggested unique flavor pairings.</p>
-            </div>
-            <div class="process-step">
-                <h3>Step 2: AI-Driven Flavor Matching</h3>
-                <p>Using advanced AI algorithms, we find the perfect balance of flavors that complement and enhance each other.</p>
-            </div>
-            <div class="process-step">
-                <h3>Step 3: Crafting the Roll</h3>
-                <p>Our expert chefs carefully craft each sushi roll, ensuring that every bite is a perfect fusion of tradition and innovation.</p>
-            </div>
-            <div class="process-step">
-                <h3>Step 4: Final Touches</h3>
-                <p>We finish each roll with AI-recommended garnishes and sauces to elevate the overall flavor experience.</p>
-            </div>
+<!-- Scroll Progress -->
+<div class="scroll-progress"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="nav-dock">
+    <div class="nav-brand">FUSION</div>
+    <a href="#home" class="nav-link active" data-section="home">Home</a>
+    <a href="#globe" class="nav-link" data-section="globe">Atlas</a>
+    <a href="#dishes" class="nav-link" data-section="dishes">Menu</a>
+    <a href="#gallery" class="nav-link" data-section="gallery">Fusions</a>
+    <a href="#process" class="nav-link" data-section="process">Kitchen</a>
+    <a href="#alchemy" class="nav-link" data-section="alchemy">Lab</a>
+    <a href="#origins" class="nav-link" data-section="origins">Origins</a>
+    <a href="#radar" class="nav-link" data-section="radar">Science</a>
+    <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+    <div class="nav-indicator" id="navIndicator"></div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
+  <div class="hero-vignette"></div>
+
+  <!-- Floating Food Images — URLs now match preloads exactly (w=800) -->
+  <div class="hero-food-float" data-speed="0.8">
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop&q=80" alt="Fusion Cuisine" loading="eager" fetchpriority="high">
+  </div>
+  <div class="hero-food-float" data-speed="1.2">
+    <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d6?w=800&auto=format&fit=crop&q=80" alt="Tex-Mex Fajitas" loading="eager" fetchpriority="high">
+  </div>
+  <div class="hero-food-float" data-speed="0.6">
+    <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&auto=format&fit=crop&q=80" alt="Nikkei Tiradito" loading="eager" fetchpriority="high">
+  </div>
+  <div class="hero-food-float" data-speed="1.0">
+    <img src="https://images.unsplash.com/photo-1600894690592-b8b81b6e2c0e?w=800&auto=format&fit=crop&q=80" alt="Korean Tacos" loading="eager" fetchpriority="high">
+  </div>
+  <div class="hero-food-float" data-speed="0.9">
+    <img src="https://images.unsplash.com/photo-1529692236671-f94f5c5f1b97?w=800&auto=format&fit=crop&q=80" alt="Lomo Saltado" loading="eager" fetchpriority="high">
+  </div>
+  <div class="hero-food-float" data-speed="1.1">
+    <img src="https://images.unsplash.com/photo-1606491956689-3ea1736c5a6e?w=800&auto=format&fit=crop&q=80" alt="Banh Mi" loading="eager" fetchpriority="high">
+  </div>
+  <div class="hero-food-float" data-speed="0.7">
+    <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&auto=format&fit=crop&q=80" alt="Gobi Manchurian" loading="eager" fetchpriority="high">
+  </div>
+  <div class="hero-food-float" data-speed="0.8">
+    <img src="https://images.unsplash.com/photo-1544510802-688270a4e88c?w=800&auto=format&fit=crop&q=80" alt="Bobotie" loading="eager" fetchpriority="high">
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Culinary Convergence</div>
+    <h1 class="hero-title">
+      <span class="line"><span class="word">Where</span> <span class="word">Worlds</span></span>
+      <span class="line"><span class="word accent">Collide</span> <span class="word">&</span> <span class="word accent">Fuse</span></span>
+    </h1>
+    <p class="hero-subtitle">Explore the most celebrated culinary fusions on Earth — from Tex-Mex borderlands to Nikkei coastlines, where cultures merge on the plate.</p>
+    <a href="#dishes" class="hero-cta" id="heroCta">
+      <span>Explore Menu</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll to Explore</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee">
+  <div class="marquee-track">
+    <div class="marquee-item"><span>Tex-Mex</span><div class="marquee-dot"></div>Nikkei</div>
+    <div class="marquee-item"><span>Korean-Mexican</span><div class="marquee-dot"></div>Chifa</div>
+    <div class="marquee-item"><span>Banh Mi</span><div class="marquee-dot"></div>Indo-Chinese</div>
+    <div class="marquee-item"><span>Cape Malay</span><div class="marquee-dot"></div>Italo-Japanese</div>
+    <div class="marquee-item"><span>Tex-Mex</span><div class="marquee-dot"></div>Nikkei</div>
+    <div class="marquee-item"><span>Korean-Mexican</span><div class="marquee-dot"></div>Chifa</div>
+    <div class="marquee-item"><span>Banh Mi</span><div class="marquee-dot"></div>Indo-Chinese</div>
+    <div class="marquee-item"><span>Cape Malay</span><div class="marquee-dot"></div>Italo-Japanese</div>
+  </div>
+</div>
+
+<!-- Manifesto -->
+<section class="manifesto" id="manifesto">
+  <div class="container">
+    <div class="section-label reveal">The Philosophy</div>
+    <div class="manifesto-text">
+      <span class="line reveal">Fusion is not a trend.</span>
+      <span class="line reveal">It is the <span class="highlight">highest form</span> of culinary intelligence —</span>
+      <span class="line reveal">the ability to see connections across cultures</span>
+      <span class="line reveal">and create something <span class="highlight">entirely new</span>.</span>
+    </div>
+  </div>
+</section>
+
+<!-- Globe -->
+<section class="globe-section" id="globe">
+  <div class="container">
+    <div class="globe-grid">
+      <div class="globe-text">
+        <div class="section-label reveal">The Atlas</div>
+        <h2 class="section-title reveal">A World Map of <span class="gradient">Flavor Fusion</span></h2>
+        <p class="reveal" style="font-size:1.05rem;color:var(--muted);line-height:1.8;margin-top:24px;margin-bottom:40px;">Fusion cuisine is the story of human migration, trade, and cultural exchange. From the Chinese-Peruvian chifas of Lima to the Korean taco trucks of Los Angeles, every fusion carries the DNA of two worlds.</p>
+        <div class="globe-stats">
+          <div class="globe-stat reveal" data-delay="100">
+            <div class="globe-stat-value">8+</div>
+            <div class="globe-stat-label">Major Fusion Styles</div>
+          </div>
+          <div class="globe-stat reveal" data-delay="200">
+            <div class="globe-stat-value">200+</div>
+            <div class="globe-stat-label">Documented Dishes</div>
+          </div>
+          <div class="globe-stat reveal" data-delay="300">
+            <div class="globe-stat-value">150</div>
+            <div class="globe-stat-label">Years of History</div>
+          </div>
+          <div class="globe-stat reveal" data-delay="400">
+            <div class="globe-stat-value">∞</div>
+            <div class="globe-stat-label">Possible Combinations</div>
+          </div>
         </div>
-    </section>
+      </div>
+      <div class="globe-visual">
+        <div class="globe-sphere" id="globeSphere"></div>
+        <div class="globe-ring" style="width:320px;height:320px;"></div>
+        <div class="globe-ring" style="width:240px;height:240px;opacity:0.5;"></div>
+        <div class="globe-ring" style="width:160px;height:160px;opacity:0.3;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dishes Menu -->
+<section class="dishes-section" id="dishes">
+  <div class="container">
+    <div class="dishes-header">
+      <div class="section-label reveal">The Menu</div>
+      <h2 class="section-title reveal">Signature <span class="gradient">Dishes</span></h2>
+      <p class="reveal" style="color:var(--muted);line-height:1.7;margin-top:16px;">Preloaded from our culinary database. Each dish represents a perfect marriage of two traditions.</p>
+    </div>
+    <div class="dishes-grid">
+      <div class="dish-card reveal" data-delay="100">
+        <div class="dish-card-image">
+          <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d6?w=800&auto=format&fit=crop&q=80" alt="Tex-Mex Fajitas" loading="lazy">
+          <div class="dish-card-badge">Tex-Mex</div>
+        </div>
+        <div class="dish-card-info">
+          <h4>Sizzling Fajitas</h4>
+          <span class="dish-origin">Texas × Mexico</span>
+          <p>Skirt steak marinated in lime and cumin, seared on a comal with bell peppers and onions.</p>
+          <div class="dish-card-meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> 25 min</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Medium</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card reveal" data-delay="150">
+        <div class="dish-card-image">
+          <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&auto=format&fit=crop&q=80" alt="Nikkei Tiradito" loading="lazy">
+          <div class="dish-card-badge">Nikkei</div>
+        </div>
+        <div class="dish-card-info">
+          <h4>Tiradito</h4>
+          <span class="dish-origin">Japan × Peru</span>
+          <p>Peruvian sashimi dressed in aji amarillo leche de tigre — Japanese precision meets Andean fire.</p>
+          <div class="dish-card-meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> 15 min</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Advanced</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card reveal" data-delay="200">
+        <div class="dish-card-image">
+          <img src="https://images.unsplash.com/photo-1600894690592-b8b81b6e2c0e?w=800&auto=format&fit=crop&q=80" alt="Korean Tacos" loading="lazy">
+          <div class="dish-card-badge">Kor-Mex</div>
+        </div>
+        <div class="dish-card-info">
+          <h4>Bulgogi Tacos</h4>
+          <span class="dish-origin">Korea × Mexico</span>
+          <p>Sweet-savory marinated beef on corn tortillas with kimchi slaw and gochujang crema.</p>
+          <div class="dish-card-meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> 40 min</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Medium</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card reveal" data-delay="250">
+        <div class="dish-card-image">
+          <img src="https://images.unsplash.com/photo-1529692236671-f94f5c5f1b97?w=800&auto=format&fit=crop&q=80" alt="Lomo Saltado" loading="lazy">
+          <div class="dish-card-badge">Chifa</div>
+        </div>
+        <div class="dish-card-info">
+          <h4>Lomo Saltado</h4>
+          <span class="dish-origin">China × Peru</span>
+          <p>Wok-seared beef with soy, vinegar, and tomatoes. Served with french fries and rice.</p>
+          <div class="dish-card-meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> 30 min</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Easy</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card reveal" data-delay="300">
+        <div class="dish-card-image">
+          <img src="https://images.unsplash.com/photo-1606491956689-3ea1736c5a6e?w=800&auto=format&fit=crop&q=80" alt="Banh Mi" loading="lazy">
+          <div class="dish-card-badge">Banh Mi</div>
+        </div>
+        <div class="dish-card-info">
+          <h4>Classic Banh Mi</h4>
+          <span class="dish-origin">France × Vietnam</span>
+          <p>Rice-flour baguette stuffed with pâté, pickled daikon, carrots, cilantro, and jalapeño.</p>
+          <div class="dish-card-meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> 45 min</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Medium</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card reveal" data-delay="350">
+        <div class="dish-card-image">
+          <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&auto=format&fit=crop&q=80" alt="Gobi Manchurian" loading="lazy">
+          <div class="dish-card-badge">Indo-Chinese</div>
+        </div>
+        <div class="dish-card-info">
+          <h4>Gobi Manchurian</h4>
+          <span class="dish-origin">India × China</span>
+          <p>Crispy cauliflower florets tossed in a fiery sauce of soy, chili, garlic, and ginger.</p>
+          <div class="dish-card-meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> 35 min</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Medium</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card reveal" data-delay="400">
+        <div class="dish-card-image">
+          <img src="https://images.unsplash.com/photo-1544510802-688270a4e88c?w=800&auto=format&fit=crop&q=80" alt="Bobotie" loading="lazy">
+          <div class="dish-card-badge">Cape Malay</div>
+        </div>
+        <div class="dish-card-info">
+          <h4>Bobotie</h4>
+          <span class="dish-origin">Malaysia × South Africa</span>
+          <p>Spiced minced lamb baked with an egg custard topping. Fragrant, fruity, and deeply comforting.</p>
+          <div class="dish-card-meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> 90 min</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Advanced</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-card reveal" data-delay="450">
+        <div class="dish-card-image">
+          <img src="https://images.unsplash.com/photo-1476124369491-e3add6cb0202?w=800&auto=format&fit=crop&q=80" alt="Miso Risotto" loading="lazy">
+          <div class="dish-card-badge">Italo-Japanese</div>
+        </div>
+        <div class="dish-card-info">
+          <h4>Miso Risotto</h4>
+          <span class="dish-origin">Italy × Japan</span>
+          <p>Arborio rice cooked in dashi and white miso, finished with Parmigiano and yuzu zest.</p>
+          <div class="dish-card-meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg> 35 min</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Advanced</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It's Made -->
+<section class="process-section" id="process">
+  <div class="container">
+    <div class="process-header">
+      <div class="section-label reveal">The Kitchen</div>
+      <h2 class="section-title reveal">How It's <span class="gradient">Made</span></h2>
+      <p class="reveal">Step-by-step fusion techniques from professional kitchens. Learn the craft behind the world's most iconic hybrid dishes.</p>
+    </div>
+    <div class="process-tabs reveal">
+      <button class="process-tab active" data-recipe="wok">Wok Stir-Fry</button>
+      <button class="process-tab" data-recipe="sushi">Sushi Rolling</button>
+      <button class="process-tab" data-recipe="plating">Fine Plating</button>
+    </div>
+
+    <div class="process-content active" id="recipe-wok">
+      <div class="process-steps">
+        <div class="process-step reveal" data-delay="100">
+          <div class="process-step-image">
+            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop&q=80" alt="Wok Heating" loading="lazy">
+            <div class="process-step-number">01</div>
+          </div>
+          <div class="process-step-info">
+            <h4>Blast the Wok</h4>
+            <p>Heat carbon steel until smoking. The wok must reach 250°C+ to create wok hei — the breath of the wok that imparts smoky flavor.</p>
+            <div class="process-step-time">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+              3 min
+            </div>
+          </div>
+        </div>
+        <div class="process-step reveal" data-delay="200">
+          <div class="process-step-image">
+            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800&auto=format&fit=crop&q=80" alt="Stir Fry" loading="lazy">
+            <div class="process-step-number">02</div>
+          </div>
+          <div class="process-step-info">
+            <h4>Aromatics First</h4>
+            <p>Garlic, ginger, and scallions hit the oil for 10 seconds. Then protein — sliced against the grain for tenderness.</p>
+            <div class="process-step-time">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+              2 min
+            </div>
+          </div>
+        </div>
+        <div class="process-step reveal" data-delay="300">
+          <div class="process-step-image">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&auto=format&fit=crop&q=80" alt="Plating" loading="lazy">
+            <div class="process-step-number">03</div>
+          </div>
+          <div class="process-step-info">
+            <h4>Toss & Sauce</h4>
+            <p>Vegetables in, then the sauce around the edges. Toss continuously for 60 seconds. Serve immediately on a hot plate.</p>
+            <div class="process-step-time">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+              1 min
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-content" id="recipe-sushi">
+      <div class="process-steps">
+        <div class="process-step reveal" data-delay="100">
+          <div class="process-step-image">
+            <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&auto=format&fit=crop&q=80" alt="Sushi Prep" loading="lazy">
+            <div class="process-step-number">01</div>
+          </div>
+          <div class="process-step-info">
+            <h4>Season the Rice</h4>
+            <p>Short-grain rice washed 3 times, cooked, then folded with seasoned vinegar while fanning to create the perfect sheen.</p>
+            <div class="process-step-time">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+              45 min
+            </div>
+          </div>
+        </div>
+        <div class="process-step reveal" data-delay="200">
+          <div class="process-step-image">
+            <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&auto=format&fit=crop&q=80" alt="Rolling" loading="lazy">
+            <div class="process-step-number">02</div>
+          </div>
+          <div class="process-step-info">
+            <h4>Layer & Roll</h4>
+            <p>Nori, rice, fillings. Roll with bamboo mat using gentle pressure. The mat shapes; your hands seal.</p>
+            <div class="process-step-time">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+              5 min
+            </div>
+          </div>
+        </div>
+        <div class="process-step reveal" data-delay="300">
+          <div class="process-step-image">
+            <img src="https://images.unsplash.com/photo-1617196034796-73dfa7b1f56e?w=800&auto=format&fit=crop&q=80" alt="Plating Sushi" loading="lazy">
+            <div class="process-step-number">03</div>
+          </div>
+          <div class="process-step-info">
+            <h4>Slice & Plate</h4>
+            <p>Wet knife between cuts. 8 pieces per roll. Arrange with wasabi, ginger, and soy. Garnish with microgreens.</p>
+            <div class="process-step-time">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+              3 min
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-content" id="recipe-plating">
+      <div class="process-steps">
+        <div class="process-step reveal" data-delay="100">
+          <div class="process-step-image">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&auto=format&fit=crop&q=80" alt="Sauce Base" loading="lazy">
+            <div class="process-step-number">01</div>
+          </div>
+          <div class="process-step-info">
+            <h4>Sauce Architecture</h4>
+            <p>Start with a swipe or dots. The sauce is the canvas. Use a squeeze bottle for precision or a spoon for organic flow.</p>
+            <div class="process-step-time">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+              2 min
+            </div>
+          </div>
+        </div>
+        <div class="process-step reveal" data-delay="200">
+          <div class="process-step-image">
+            <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&auto=format&fit=crop&q=80" alt="Building" loading="lazy">
+            <div class="process-step-number">02</div>
+          </div>
+          <div class="process-step-info">
+            <h4>Build Height</h4>
+            <p>Protein at 1 o'clock, starch at 5. Stack vertically for drama. Odd numbers of elements look more natural than even.</p>
+            <div class="process-step-time">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+              3 min
+            </div>
+          </div>
+        </div>
+        <div class="process-step reveal" data-delay="300">
+          <div class="process-step-image">
+            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=80" alt="Garnish" loading="lazy">
+            <div class="process-step-number">03</div>
+          </div>
+          <div class="process-step-info">
+            <h4>Final Touch</h4>
+            <p>Microgreens with tweezers. A dusting of spice. Edible flowers. The garnish must taste as good as it looks.</p>
+            <div class="process-step-time">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+              1 min
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="gallery-section" id="gallery">
+  <div class="gallery-sticky">
+    <div class="gallery-header">
+      <div class="section-label reveal">The Collection</div>
+      <h2 class="section-title reveal">Legendary <span class="gradient">Fusions</span></h2>
+    </div>
+    <div class="gallery-track" id="galleryTrack">
+
+      <div class="fusion-card card-texmex" data-tilt>
+        <div class="fusion-card-number">01</div>
+        <div class="fusion-card-flag"><span>Texas</span><span>Mexico</span></div>
+        <h3>Tex-Mex</h3>
+        <p>Born on the 1,250-mile border, Tex-Mex fused Mexican chili, corn, and beans with American beef, cheese, and flour tortillas.</p>
+        <div class="fusion-dishes">
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Fajitas with sizzling skirt steak</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Chili con Carne</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>San Antonio Puffy Tacos</div>
+        </div>
+        <div class="fusion-visual"><svg viewBox="0 0 160 160" fill="none"><circle cx="80" cy="80" r="60" stroke="var(--coral)" stroke-width="0.5" opacity="0.3"/><circle cx="80" cy="80" r="40" stroke="var(--coral)" stroke-width="0.5" opacity="0.4"/><circle cx="80" cy="80" r="20" stroke="var(--coral)" stroke-width="1" opacity="0.6"/><circle cx="80" cy="80" r="6" fill="var(--coral)" opacity="0.8"/></svg></div>
+      </div>
+
+      <div class="fusion-card card-nikkei" data-tilt>
+        <div class="fusion-card-number">02</div>
+        <div class="fusion-card-flag"><span>Japan</span><span>Peru</span></div>
+        <h3>Nikkei</h3>
+        <p>Japanese immigrants arrived in Peru in the 1890s and married precise techniques with Peru's explosive chilies, citrus, and corn.</p>
+        <div class="fusion-dishes">
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Tiradito with aji amarillo</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Anticuchos with miso glaze</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Nikkei sushi with rocoto</div>
+        </div>
+        <div class="fusion-visual"><svg viewBox="0 0 160 160" fill="none"><path d="M80 20 L140 80 L80 140 L20 80 Z" stroke="var(--teal)" stroke-width="0.5" opacity="0.3"/><path d="M80 40 L120 80 L80 120 L40 80 Z" stroke="var(--teal)" stroke-width="0.5" opacity="0.4"/><circle cx="80" cy="80" r="8" fill="var(--teal)" opacity="0.8"/></svg></div>
+      </div>
+
+      <div class="fusion-card card-koreanmex" data-tilt>
+        <div class="fusion-card-number">03</div>
+        <div class="fusion-card-flag"><span>Korea</span><span>Mexico</span></div>
+        <h3>Korean-Mexican</h3>
+        <p>What started as LA food trucks exploded into a global phenomenon. Bulgogi's umami meets the taco's handheld genius.</p>
+        <div class="fusion-dishes">
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Korean BBQ Tacos</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Bulgogi Burritos</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Gochujang Chilaquiles</div>
+        </div>
+        <div class="fusion-visual"><svg viewBox="0 0 160 160" fill="none"><rect x="30" y="30" width="100" height="100" rx="20" stroke="var(--rose)" stroke-width="0.5" opacity="0.3"/><rect x="50" y="50" width="60" height="60" rx="15" stroke="var(--rose)" stroke-width="0.5" opacity="0.4"/><rect x="70" y="70" width="20" height="20" rx="8" fill="var(--rose)" opacity="0.8"/></svg></div>
+      </div>
+
+      <div class="fusion-card card-chifa" data-tilt>
+        <div class="fusion-card-number">04</div>
+        <div class="fusion-card-flag"><span>China</span><span>Peru</span></div>
+        <h3>Chifa</h3>
+        <p>Chinese immigrants brought woks and soy sauce to Peru in the 19th century. Chifa restaurants now blanket Lima.</p>
+        <div class="fusion-dishes">
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Arroz Chaufa</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Lomo Saltado</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Sopa de Wonton</div>
+        </div>
+        <div class="fusion-visual"><svg viewBox="0 0 160 160" fill="none"><circle cx="80" cy="80" r="50" stroke="var(--gold)" stroke-width="0.5" opacity="0.3"/><circle cx="80" cy="80" r="30" stroke="var(--gold)" stroke-width="0.5" opacity="0.4"/><circle cx="80" cy="80" r="10" fill="var(--gold)" opacity="0.8"/><line x1="80" y1="30" x2="80" y2="130" stroke="var(--gold)" stroke-width="0.5" opacity="0.2"/><line x1="30" y1="80" x2="130" y2="80" stroke="var(--gold)" stroke-width="0.5" opacity="0.2"/></svg></div>
+      </div>
+
+      <div class="fusion-card card-banhmi" data-tilt>
+        <div class="fusion-card-number">05</div>
+        <div class="fusion-card-flag"><span>France</span><span>Vietnam</span></div>
+        <h3>Banh Mi</h3>
+        <p>French colonists brought the baguette to Vietnam in the 1800s. The Vietnamese made it their own with rice-flour dough.</p>
+        <div class="fusion-dishes">
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Classic Banh Mi</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Pho with French broth</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Vietnamese Coffee</div>
+        </div>
+        <div class="fusion-visual"><svg viewBox="0 0 160 160" fill="none"><path d="M40 80 Q80 20 120 80 Q80 140 40 80" stroke="var(--violet)" stroke-width="0.5" opacity="0.3" fill="var(--violet)" fill-opacity="0.05"/><circle cx="80" cy="80" r="25" stroke="var(--violet)" stroke-width="0.5" opacity="0.4"/><circle cx="80" cy="80" r="8" fill="var(--violet)" opacity="0.8"/></svg></div>
+      </div>
+
+      <div class="fusion-card card-indochinese" data-tilt>
+        <div class="fusion-card-number">06</div>
+        <div class="fusion-card-flag"><span>India</span><span>China</span></div>
+        <h3>Indo-Chinese</h3>
+        <p>Born in Kolkata's Chinatown 85 years ago, this fusion marries Chinese wok techniques with Indian spices.</p>
+        <div class="fusion-dishes">
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Gobi Manchurian</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Hakka Noodles</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Chili Chicken</div>
+        </div>
+        <div class="fusion-visual"><svg viewBox="0 0 160 160" fill="none"><polygon points="80,20 140,60 120,130 40,130 20,60" stroke="#ff4757" stroke-width="0.5" opacity="0.3" fill="#ff4757" fill-opacity="0.05"/><polygon points="80,50 110,70 100,110 60,110 50,70" stroke="#ff4757" stroke-width="0.5" opacity="0.4"/><circle cx="80" cy="80" r="8" fill="#ff4757" opacity="0.8"/></svg></div>
+      </div>
+
+      <div class="fusion-card card-capemalay" data-tilt>
+        <div class="fusion-card-number">07</div>
+        <div class="fusion-card-flag"><span>Malaysia</span><span>South Africa</span></div>
+        <h3>Cape Malay</h3>
+        <p>Malaysian, Indonesian, and Indian slaves arrived in 17th-century Cape Town and adapted their spices to Dutch pantries.</p>
+        <div class="fusion-dishes">
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Bobotie</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Koeksisters</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Samosas</div>
+        </div>
+        <div class="fusion-visual"><svg viewBox="0 0 160 160" fill="none"><circle cx="80" cy="80" r="55" stroke="#ffa502" stroke-width="0.5" opacity="0.3" stroke-dasharray="4 4"/><circle cx="80" cy="80" r="35" stroke="#ffa502" stroke-width="0.5" opacity="0.4"/><circle cx="80" cy="80" r="15" stroke="#ffa502" stroke-width="1" opacity="0.6"/><circle cx="80" cy="80" r="6" fill="#ffa502" opacity="0.8"/></svg></div>
+      </div>
+
+      <div class="fusion-card card-italjap" data-tilt>
+        <div class="fusion-card-number">08</div>
+        <div class="fusion-card-flag"><span>Italy</span><span>Japan</span></div>
+        <h3>Italo-Japanese</h3>
+        <p>Two cultures obsessed with perfection. Kaiseki's seasonal precision meets Italian pasta craft.</p>
+        <div class="fusion-dishes">
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Wagyu Ragù Chawanmushi</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Rosemary Nori Focaccia</div>
+          <div class="fusion-dish"><span class="fusion-dish-dot"></span>Miso Risotto</div>
+        </div>
+        <div class="fusion-visual"><svg viewBox="0 0 160 160" fill="none"><rect x="35" y="35" width="90" height="90" rx="25" stroke="var(--mint)" stroke-width="0.5" opacity="0.3"/><rect x="55" y="55" width="50" height="50" rx="15" stroke="var(--mint)" stroke-width="0.5" opacity="0.4"/><circle cx="80" cy="80" r="10" fill="var(--mint)" opacity="0.8"/></svg></div>
+      </div>
+
+    </div>
+    <div class="gallery-progress"><div class="gallery-progress-bar" id="galleryProgressBar"></div></div>
+  </div>
+</section>
+
+<!-- Alchemy Lab -->
+<section class="alchemy-section" id="alchemy">
+  <div class="container">
+    <div class="alchemy-header">
+      <div class="section-label reveal" style="justify-content:center">Interactive Lab</div>
+      <h2 class="section-title reveal" style="margin:0 auto 16px;max-width:600px">The <span class="gradient">Fusion Alchemy</span></h2>
+      <p class="reveal" style="color:var(--muted);line-height:1.7;">Select two culinary traditions and watch them fuse into a legendary dish.</p>
+    </div>
+    <div class="alchemy-interface reveal">
+      <canvas class="alchemy-particles" id="alchemyParticles"></canvas>
+      <div class="alchemy-slots">
+        <div class="alchemy-slot" id="slotA">
+          <div class="slot-icon">🧪</div>
+          <div class="slot-label">Origin A</div>
+          <div class="slot-value" id="slotAValue"></div>
+        </div>
+        <div class="alchemy-plus">+</div>
+        <div class="alchemy-slot" id="slotB">
+          <div class="slot-icon">🧪</div>
+          <div class="slot-label">Origin B</div>
+          <div class="slot-value" id="slotBValue"></div>
+        </div>
+        <div class="alchemy-equals">=</div>
+        <div class="alchemy-result" id="alchemyResult">
+          <h4 id="resultTitle">Fusion</h4>
+          <p id="resultDesc">Select ingredients to begin synthesis.</p>
+        </div>
+      </div>
+      <div class="alchemy-ingredients">
+        <button class="alchemy-ingredient" data-cuisine="Mexican">🇲🇽 Mexican</button>
+        <button class="alchemy-ingredient" data-cuisine="Japanese">🇯🇵 Japanese</button>
+        <button class="alchemy-ingredient" data-cuisine="Korean">🇰🇷 Korean</button>
+        <button class="alchemy-ingredient" data-cuisine="Peruvian">🇵🇪 Peruvian</button>
+        <button class="alchemy-ingredient" data-cuisine="Chinese">🇨🇳 Chinese</button>
+        <button class="alchemy-ingredient" data-cuisine="Vietnamese">🇻🇳 Vietnamese</button>
+        <button class="alchemy-ingredient" data-cuisine="French">🇫🇷 French</button>
+        <button class="alchemy-ingredient" data-cuisine="Indian">🇮🇳 Indian</button>
+        <button class="alchemy-ingredient" data-cuisine="Italian">🇮🇹 Italian</button>
+        <button class="alchemy-ingredient" data-cuisine="Malaysian">🇲🇾 Malaysian</button>
+        <button class="alchemy-ingredient" data-cuisine="American">🇺🇸 American</button>
+        <button class="alchemy-ingredient" data-cuisine="South African">🇿🇦 South African</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Origins Timeline -->
+<section class="origins-section" id="origins">
+  <div class="container">
+    <div class="origins-header">
+      <div class="section-label reveal" style="justify-content:center">Historical Timeline</div>
+      <h2 class="section-title reveal" style="margin:0 auto;max-width:600px">How <span class="gradient">Fusion</span> Was Born</h2>
+    </div>
+    <div class="origins-timeline">
+      <div class="origins-line"></div>
+      <div class="origins-steps">
+        <div class="origins-step" data-step="1">
+          <div class="origins-node">01</div>
+          <div class="origins-content">
+            <div class="origins-year">1889 — Peru</div>
+            <h3>The First Nikkei</h3>
+            <p>Japanese immigrants arrive in Peru to work on coastal plantations. They bring soy sauce, dashi, and precise knife skills. Within decades, tiradito is born.</p>
+          </div>
+          <div class="origins-visual"><svg viewBox="0 0 200 200" fill="none"><circle cx="100" cy="100" r="70" stroke="var(--teal)" stroke-width="0.5" opacity="0.2"/><circle cx="100" cy="100" r="50" stroke="var(--teal)" stroke-width="0.5" opacity="0.3"/><circle cx="100" cy="100" r="30" stroke="var(--teal)" stroke-width="1" opacity="0.4"/><circle cx="100" cy="100" r="10" fill="var(--teal)" opacity="0.6"/></svg></div>
+        </div>
+        <div class="origins-step" data-step="2">
+          <div class="origins-node">02</div>
+          <div class="origins-visual"><svg viewBox="0 0 200 200" fill="none"><rect x="40" y="40" width="120" height="120" rx="25" stroke="var(--gold)" stroke-width="0.5" opacity="0.2"/><rect x="60" y="60" width="80" height="80" rx="20" stroke="var(--gold)" stroke-width="0.5" opacity="0.3"/><rect x="80" y="80" width="40" height="40" rx="15" stroke="var(--gold)" stroke-width="1" opacity="0.4"/><circle cx="100" cy="100" r="10" fill="var(--gold)" opacity="0.6"/></svg></div>
+          <div class="origins-content">
+            <div class="origins-year">1920s — Peru</div>
+            <h3>Chifa Emerges</h3>
+            <p>Chinese-Peruvian restaurants called "chifas" open across Lima. Cantonese wok techniques meet Peruvian peppers and potatoes.</p>
+          </div>
+        </div>
+        <div class="origins-step" data-step="3">
+          <div class="origins-node">03</div>
+          <div class="origins-content">
+            <div class="origins-year">1950s — USA</div>
+            <h3>Tex-Mex Goes Mainstream</h3>
+            <p>What began as borderland cooking in Texas becomes a restaurant phenomenon. Fajitas, nachos, and chili con carne spread across America.</p>
+          </div>
+          <div class="origins-visual"><svg viewBox="0 0 200 200" fill="none"><path d="M100 30 L170 100 L100 170 L30 100 Z" stroke="var(--coral)" stroke-width="0.5" opacity="0.2"/><path d="M100 60 L140 100 L100 140 L60 100 Z" stroke="var(--coral)" stroke-width="0.5" opacity="0.3"/><circle cx="100" cy="100" r="15" fill="var(--coral)" opacity="0.5"/></svg></div>
+        </div>
+        <div class="origins-step" data-step="4">
+          <div class="origins-node">04</div>
+          <div class="origins-visual"><svg viewBox="0 0 200 200" fill="none"><circle cx="100" cy="100" r="70" stroke="var(--violet)" stroke-width="0.5" opacity="0.2" stroke-dasharray="6 6"/><circle cx="100" cy="100" r="45" stroke="var(--violet)" stroke-width="0.5" opacity="0.3"/><circle cx="100" cy="100" r="20" stroke="var(--violet)" stroke-width="1" opacity="0.4"/><circle cx="100" cy="100" r="8" fill="var(--violet)" opacity="0.6"/></svg></div>
+          <div class="origins-content">
+            <div class="origins-year">1950s — Vietnam</div>
+            <h3>The Banh Mi Revolution</h3>
+            <p>After French colonization, Vietnamese bakers substitute rice flour for expensive wheat, creating a lighter baguette.</p>
+          </div>
+        </div>
+        <div class="origins-step" data-step="5">
+          <div class="origins-node">05</div>
+          <div class="origins-content">
+            <div class="origins-year">2008 — Los Angeles</div>
+            <h3>The Korean Taco Explosion</h3>
+            <p>Kogi BBQ food truck launches in LA, serving bulgogi tacos with kimchi and gochujang. The lines wrap around blocks.</p>
+          </div>
+          <div class="origins-visual"><svg viewBox="0 0 200 200" fill="none"><polygon points="100,30 160,70 140,140 60,140 40,70" stroke="var(--rose)" stroke-width="0.5" opacity="0.2" fill="var(--rose)" fill-opacity="0.05"/><polygon points="100,60 130,80 120,120 80,120 70,80" stroke="var(--rose)" stroke-width="0.5" opacity="0.3"/><circle cx="100" cy="95" r="12" fill="var(--rose)" opacity="0.5"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Flavor Radar -->
+<section class="radar-section" id="radar">
+  <div class="container">
+    <div class="radar-grid">
+      <div class="radar-text">
+        <div class="section-label reveal">Molecular Breakdown</div>
+        <h2 class="section-title reveal">The <span class="gradient">Chemistry</span> of Fusion</h2>
+        <p class="reveal" style="font-size:1.05rem;color:var(--muted);line-height:1.8;margin-top:24px;">Every great fusion is a molecular marriage. Explore the flavor compounds that make these cuisines sing when combined.</p>
+        <div class="radar-controls reveal">
+          <button class="radar-btn active" data-fusion="texmex">Tex-Mex</button>
+          <button class="radar-btn" data-fusion="nikkei">Nikkei</button>
+          <button class="radar-btn" data-fusion="koreanmex">Kor-Mex</button>
+          <button class="radar-btn" data-fusion="banhmi">Banh Mi</button>
+          <button class="radar-btn" data-fusion="chifa">Chifa</button>
+        </div>
+      </div>
+      <div class="radar-canvas-wrap reveal">
+        <canvas id="radarCanvas" width="400" height="400"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ingredient Network -->
+<section class="network-section" id="network">
+  <div class="container">
+    <div class="network-header">
+      <div class="section-label reveal">The Pantry</div>
+      <h2 class="section-title reveal">Ingredient <span class="gradient">Network</span></h2>
+      <p class="reveal" style="color:var(--muted);line-height:1.7;">The building blocks of fusion. These ingredients travel across borders and find new meaning in foreign kitchens.</p>
+    </div>
+    <div class="network-viz reveal">
+      <svg viewBox="0 0 800 500" fill="none" id="networkSvg">
+        <defs>
+          <linearGradient id="netGrad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:var(--coral);stop-opacity:0.3"/><stop offset="100%" style="stop-color:var(--teal);stop-opacity:0.3"/></linearGradient>
+        </defs>
+        <line x1="200" y1="250" x2="400" y2="150" stroke="url(#netGrad1)" stroke-width="1" class="network-line" opacity="0.3"/>
+        <line x1="400" y1="150" x2="600" y2="250" stroke="url(#netGrad1)" stroke-width="1" class="network-line" opacity="0.3"/>
+        <line x1="200" y1="250" x2="400" y2="350" stroke="url(#netGrad1)" stroke-width="1" class="network-line" opacity="0.3"/>
+        <line x1="400" y1="350" x2="600" y2="250" stroke="url(#netGrad1)" stroke-width="1" class="network-line" opacity="0.3"/>
+        <line x1="400" y1="150" x2="400" y2="350" stroke="url(#netGrad1)" stroke-width="1" class="network-line" opacity="0.2"/>
+        <line x1="200" y1="250" x2="600" y2="250" stroke="url(#netGrad1)" stroke-width="1" class="network-line" opacity="0.15"/>
+        <line x1="300" y1="100" x2="400" y2="150" stroke="url(#netGrad1)" stroke-width="1" class="network-line" opacity="0.25"/>
+        <line x1="500" y1="100" x2="400" y2="150" stroke="url(#netGrad1)" stroke-width="1" class="network-line" opacity="0.25"/>
+        <line x1="300" y1="400" x2="400" y2="350" stroke="url(#netGrad1)" stroke-width="1" class="network-line" opacity="0.25"/>
+        <line x1="500" y1="400" x2="400" y2="350" stroke="url(#netGrad1)" stroke-width="1" class="network-line" opacity="0.25"/>
+        <circle cx="400" cy="150" r="20" fill="var(--elevated)" stroke="var(--coral)" stroke-width="1.5" class="network-node" style="color:var(--coral)" data-label="Chili"/>
+        <circle cx="200" cy="250" r="18" fill="var(--elevated)" stroke="var(--teal)" stroke-width="1.5" class="network-node" style="color:var(--teal)" data-label="Soy Sauce"/>
+        <circle cx="600" cy="250" r="18" fill="var(--elevated)" stroke="var(--gold)" stroke-width="1.5" class="network-node" style="color:var(--gold)" data-label="Citrus"/>
+        <circle cx="400" cy="350" r="20" fill="var(--elevated)" stroke="var(--violet)" stroke-width="1.5" class="network-node" style="color:var(--violet)" data-label="Noodles"/>
+        <circle cx="300" cy="100" r="14" fill="var(--elevated)" stroke="var(--rose)" stroke-width="1.5" class="network-node" style="color:var(--rose)" data-label="Garlic"/>
+        <circle cx="500" cy="100" r="14" fill="var(--elevated)" stroke="var(--mint)" stroke-width="1.5" class="network-node" style="color:var(--mint)" data-label="Herbs"/>
+        <circle cx="300" cy="400" r="14" fill="var(--elevated)" stroke="#ff4757" stroke-width="1.5" class="network-node" style="color:#ff4757" data-label="Ginger"/>
+        <circle cx="500" cy="400" r="14" fill="var(--elevated)" stroke="#ffa502" stroke-width="1.5" class="network-node" style="color:#ffa502" data-label="Coconut"/>
+        <text x="400" y="125" text-anchor="middle" fill="var(--text)" font-family="var(--font-mono)" font-size="11" letter-spacing="1">CHILI</text>
+        <text x="200" y="225" text-anchor="middle" fill="var(--text)" font-family="var(--font-mono)" font-size="11" letter-spacing="1">SOY</text>
+        <text x="600" y="225" text-anchor="middle" fill="var(--text)" font-family="var(--font-mono)" font-size="11" letter-spacing="1">CITRUS</text>
+        <text x="400" y="390" text-anchor="middle" fill="var(--text)" font-family="var(--font-mono)" font-size="11" letter-spacing="1">NOODLES</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-label reveal">Connect</div>
+        <h2 class="reveal">Start Your <span class="gradient">Fusion</span></h2>
+        <p class="reveal">Have a culinary fusion story? Want to collaborate? Or just hungry? Reach out to our team of gastronomic historians and chefs.</p>
+        <div class="contact-links">
+          <a href="mailto:hello@fusion.atlas" class="contact-link reveal" data-delay="100">
+            <div class="contact-link-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div class="contact-link-text">hello@fusion.atlas<span>General Inquiries</span></div>
+          </a>
+          <a href="#" class="contact-link reveal" data-delay="200">
+            <div class="contact-link-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div class="contact-link-text">Global HQ<span>Los Angeles, California</span></div>
+          </a>
+          <a href="#" class="contact-link reveal" data-delay="300">
+            <div class="contact-link-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div class="contact-link-text">+1 (323) 555-0199<span>24/7 Culinary Support</span></div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form reveal" id="contactForm" data-tilt>
+        <form id="form">
+          <div class="form-group"><input type="text" id="name" placeholder=" " required><label for="name">Your Name</label><div class="form-line"></div></div>
+          <div class="form-group"><input type="email" id="email" placeholder=" " required><label for="email">Email Address</label><div class="form-line"></div></div>
+          <div class="form-group"><textarea id="message" placeholder=" " required></textarea><label for="message">Your Message</label><div class="form-line"></div></div>
+          <button type="submit" class="form-submit">Transmit Signal</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">FUSION</div>
+        <p class="footer-desc">Mapping the world's greatest culinary convergences. Every fusion is a story of migration, innovation, and appetite.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Explore</h4>
+        <a href="#home">Home</a>
+        <a href="#globe">Atlas</a>
+        <a href="#dishes">Menu</a>
+        <a href="#gallery">Fusions</a>
+      </div>
+      <div class="footer-links">
+        <h4>Learn</h4>
+        <a href="#process">Kitchen</a>
+        <a href="#origins">Origins</a>
+        <a href="#radar">Science</a>
+        <a href="#">Press</a>
+      </div>
+      <div class="footer-links">
+        <h4>Social</h4>
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+        <a href="#">TikTok</a>
+        <a href="#">YouTube</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copyright">© 2026 Fusion Atlas. All culinary rights reserved.</div>
+      <div class="footer-social">
+        <a href="#" aria-label="Twitter"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// FLUID HERO SIMULATION + FOOD FLOAT PARALLAX
+// ============================================================
+const heroCanvas = document.getElementById('heroCanvas');
+const hCtx = heroCanvas.getContext('2d');
+let hW, hH;
+function resizeHero() {
+  hW = heroCanvas.width = window.innerWidth;
+  hH = heroCanvas.height = window.innerHeight;
+}
+resizeHero();
+window.addEventListener('resize', resizeHero);
+
+const particles = [];
+const PARTICLE_COUNT = 1200;
+const colors = [
+  { r: 255, g: 107, b: 53 },
+  { r: 46, g: 196, b: 182 },
+  { r: 231, g: 29, b: 54 },
+];
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * hW;
+    this.y = Math.random() * hH;
+    this.vx = (Math.random() - 0.5) * 0.5;
+    this.vy = (Math.random() - 0.5) * 0.5;
+    this.c = colors[Math.floor(Math.random() * colors.length)];
+    this.size = Math.random() * 2 + 1;
+  }
+  update(mx, my, md) {
+    this.x += this.vx; this.y += this.vy;
+    if (md) {
+      const dx = this.x - mx, dy = this.y - my;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 200) {
+        const force = (200 - dist) / 200;
+        this.vx += (dx / dist) * force * 0.8;
+        this.vy += (dy / dist) * force * 0.8;
+      }
+    }
+    this.vx *= 0.98; this.vy *= 0.98;
+    if (this.x < 0) this.x = hW; if (this.x > hW) this.x = 0;
+    if (this.y < 0) this.y = hH; if (this.y > hH) this.y = 0;
+  }
+  draw(ctx) {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${this.c.r},${this.c.g},${this.c.b},0.6)`;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+let mx = 0, my = 0, md = false;
+heroCanvas.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+heroCanvas.addEventListener('mousedown', () => md = true);
+heroCanvas.addEventListener('mouseup', () => md = false);
+heroCanvas.addEventListener('mouseleave', () => md = false);
+
+function animateHero() {
+  hCtx.globalCompositeOperation = 'source-over';
+  hCtx.fillStyle = 'rgba(3,3,5,0.15)';
+  hCtx.fillRect(0, 0, hW, hH);
+  hCtx.globalCompositeOperation = 'lighter';
+  for (const p of particles) { p.update(mx, my, md); p.draw(hCtx); }
+  for (let i = 0; i < particles.length; i += 5) {
+    for (let j = i + 5; j < particles.length; j += 5) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 80) {
+        hCtx.beginPath();
+        hCtx.moveTo(particles[i].x, particles[i].y);
+        hCtx.lineTo(particles[j].x, particles[j].y);
+        hCtx.strokeStyle = `rgba(255,255,255,${0.08 * (1 - dist/80)})`;
+        hCtx.lineWidth = 0.5;
+        hCtx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(animateHero);
+}
+animateHero();
+
+// Food float parallax on scroll
+const foodFloats = document.querySelectorAll('.hero-food-float');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  foodFloats.forEach((el, i) => {
+    const speed = parseFloat(el.dataset.speed) || 1;
+    const y = scrolled * speed * 0.15;
+    const rotate = scrolled * 0.02 * (i % 2 === 0 ? 1 : -1);
+    el.style.transform = `translateY(${y}px) rotate(${rotate}deg)`;
+    el.style.opacity = Math.max(0, 0.85 - scrolled / 800);
+  });
+}, { passive: true });
+
+// ============================================================
+// PRELOADER
+// ============================================================
+const preloader = document.getElementById('preloader');
+const preloaderPercent = document.getElementById('preloaderPercent');
+let loadProgress = 0;
+const loadInterval = setInterval(() => {
+  loadProgress += Math.random() * 15;
+  if (loadProgress >= 100) {
+    loadProgress = 100;
+    clearInterval(loadInterval);
+    setTimeout(() => preloader.classList.add('done'), 600);
+  }
+  preloaderPercent.textContent = Math.floor(loadProgress) + '%';
+}, 200);
+
+// ============================================================
+// CURSOR
+// ============================================================
+const cursor = document.getElementById('cursor');
+const cursorTrail = document.getElementById('cursorTrail');
+let cx = 0, cy = 0, tx = 0, ty = 0, trx = 0, try_ = 0;
+
+if (window.matchMedia('(pointer: fine)').matches) {
+  document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+  function animateCursor() {
+    cx += (tx - cx) * 0.15; cy += (ty - cy) * 0.15;
+    trx += (tx - trx) * 0.08; try_ += (ty - try_) * 0.08;
+    cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
+    cursorTrail.style.left = trx + 'px'; cursorTrail.style.top = try_ + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll('a, button, .fusion-card, .globe-stat, .alchemy-ingredient, .radar-btn, .network-node, .contact-link, .dish-card, .process-tab, .process-step').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+const nav = document.getElementById('nav');
+const navLinks = document.querySelectorAll('.nav-link');
+const navIndicator = document.getElementById('navIndicator');
+
+window.addEventListener('scroll', () => { nav.classList.toggle('visible', window.scrollY > 100); });
+
+function updateIndicator(link) {
+  const rect = link.getBoundingClientRect();
+  const parent = link.parentElement.getBoundingClientRect();
+  navIndicator.style.width = rect.width + 'px';
+  navIndicator.style.left = (rect.left - parent.left) + 'px';
+}
+navLinks.forEach(link => { link.addEventListener('mouseenter', () => updateIndicator(link)); });
+
+const sections = document.querySelectorAll('section[id]');
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('.nav-link[data-section="' + entry.target.id + '"]');
+      if (active) { active.classList.add('active'); updateIndicator(active); }
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => secObs.observe(s));
+
+// ============================================================
+// 3D TILT
+// ============================================================
+document.querySelectorAll('[data-tilt]').forEach(el => {
+  el.addEventListener('mousemove', e => {
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    const rx = (y - 0.5) * 16;
+    const ry = (x - 0.5) * -16;
+    el.style.transform = 'perspective(1000px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) scale3d(1.02,1.02,1.02)';
+    el.style.setProperty('--mx', (x * 100) + '%');
+    el.style.setProperty('--my', (y * 100) + '%');
+  });
+  el.addEventListener('mouseleave', () => { el.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1,1,1)'; });
+});
+
+// ============================================================
+// SCROLL REVEAL
+// ============================================================
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const delay = entry.target.dataset.delay || 0;
+      setTimeout(() => entry.target.classList.add('visible'), delay);
+      revObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+revealEls.forEach(el => revObs.observe(el));
+
+const manifestoLines = document.querySelectorAll('.manifesto-text .line');
+const manObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); manObs.unobserve(entry.target); }
+  });
+}, { threshold: 0.3 });
+manifestoLines.forEach(el => manObs.observe(el));
+
+// ============================================================
+// HORIZONTAL GALLERY
+// ============================================================
+const galleryTrack = document.getElementById('galleryTrack');
+const galleryProgressBar = document.getElementById('galleryProgressBar');
+const gallerySection = document.querySelector('.gallery-section');
+
+if (window.innerWidth > 1024) {
+  window.addEventListener('scroll', () => {
+    const rect = gallerySection.getBoundingClientRect();
+    const top = rect.top;
+    const h = gallerySection.offsetHeight;
+    const vh = window.innerHeight;
+    if (top < 0 && top > -(h - vh)) {
+      const prog = Math.abs(top) / (h - vh);
+      const max = galleryTrack.scrollWidth - window.innerWidth + 96;
+      galleryTrack.style.transform = 'translateX(' + (-prog * max) + 'px)';
+      if (galleryProgressBar) galleryProgressBar.style.width = (prog * 100) + '%';
+    }
+  }, { passive: true });
+}
+
+// ============================================================
+// ORIGINS TIMELINE
+// ============================================================
+const originSteps = document.querySelectorAll('.origins-step');
+const origObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) { entry.target.classList.add('active'); origObs.unobserve(entry.target); }
+  });
+}, { threshold: 0.4 });
+originSteps.forEach(s => origObs.observe(s));
+
+// ============================================================
+// GLOBE GENERATION
+// ============================================================
+const globeSphere = document.getElementById('globeSphere');
+const globeDots = 120;
+const activeIndices = [12, 35, 58, 72, 89, 105];
+for (let i = 0; i < globeDots; i++) {
+  const phi = Math.acos(-1 + (2 * i) / globeDots);
+  const theta = Math.sqrt(globeDots * Math.PI) * phi;
+  const x = 160 * Math.cos(theta) * Math.sin(phi);
+  const y = 160 * Math.sin(theta) * Math.sin(phi);
+  const z = 160 * Math.cos(phi);
+  const dot = document.createElement('div');
+  dot.className = 'globe-dot' + (activeIndices.includes(i) ? ' active' : '');
+  dot.style.transform = 'translate3d(' + (x + 160) + 'px,' + (y + 160) + 'px,' + z + 'px)';
+  globeSphere.appendChild(dot);
+}
+
+// ============================================================
+// DISH CARD HOVER MAGNETIC EFFECT
+// ============================================================
+document.querySelectorAll('.dish-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--mx', x + 'px');
+    card.style.setProperty('--my', y + 'px');
+  });
+});
+
+// ============================================================
+// HOW IT'S MADE — TABS
+// ============================================================
+const processTabs = document.querySelectorAll('.process-tab');
+const processContents = document.querySelectorAll('.process-content');
+
+processTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    processTabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const recipe = tab.dataset.recipe;
+    processContents.forEach(c => c.classList.remove('active'));
+    document.getElementById('recipe-' + recipe).classList.add('active');
+  });
+});
+
+// ============================================================
+// ALCHEMY LAB
+// ============================================================
+const slotA = document.getElementById('slotA');
+const slotB = document.getElementById('slotB');
+const slotAValue = document.getElementById('slotAValue');
+const slotBValue = document.getElementById('slotBValue');
+const alchemyResult = document.getElementById('alchemyResult');
+const resultTitle = document.getElementById('resultTitle');
+const resultDesc = document.getElementById('resultDesc');
+const ingredients = document.querySelectorAll('.alchemy-ingredient');
+let selectedA = null, selectedB = null;
+
+const fusionRecipes = {
+  'Mexican+American': { name: 'Tex-Mex', desc: 'The 1,250-mile border created a cuisine of chili, cheese, and flour tortillas that conquered the world.' },
+  'American+Mexican': { name: 'Tex-Mex', desc: 'The 1,250-mile border created a cuisine of chili, cheese, and flour tortillas that conquered the world.' },
+  'Japanese+Peruvian': { name: 'Nikkei', desc: 'Japanese precision meets Peruvian fire. Sashimi with aji amarillo — elegant and explosive.' },
+  'Peruvian+Japanese': { name: 'Nikkei', desc: 'Japanese precision meets Peruvian fire. Sashimi with aji amarillo — elegant and explosive.' },
+  'Korean+Mexican': { name: 'Korean-Mexican', desc: 'Bulgogi tacos with kimchi. LA food truck culture turned into a global phenomenon.' },
+  'Mexican+Korean': { name: 'Korean-Mexican', desc: 'Bulgogi tacos with kimchi. LA food truck culture turned into a global phenomenon.' },
+  'Chinese+Peruvian': { name: 'Chifa', desc: 'Cantonese wok techniques married to Peruvian peppers and potatoes in Limas Chinatown.' },
+  'Peruvian+Chinese': { name: 'Chifa', desc: 'Cantonese wok techniques married to Peruvian peppers and potatoes in Limas Chinatown.' },
+  'French+Vietnamese': { name: 'Banh Mi Culture', desc: 'The baguette met rice flour, pickled vegetables, and cilantro. The worlds greatest sandwich.' },
+  'Vietnamese+French': { name: 'Banh Mi Culture', desc: 'The baguette met rice flour, pickled vegetables, and cilantro. The worlds greatest sandwich.' },
+  'Indian+Chinese': { name: 'Indo-Chinese', desc: 'Kolkatas Chinatown gave birth to Manchurian cauliflower and Hakka noodles spiced with cumin.' },
+  'Chinese+Indian': { name: 'Indo-Chinese', desc: 'Kolkatas Chinatown gave birth to Manchurian cauliflower and Hakka noodles spiced with cumin.' },
+  'Malaysian+South African': { name: 'Cape Malay', desc: 'Malaysian slaves brought spices to Cape Town. Bobotie and koeksisters were born.' },
+  'South African+Malaysian': { name: 'Cape Malay', desc: 'Malaysian slaves brought spices to Cape Town. Bobotie and koeksisters were born.' },
+  'Italian+Japanese': { name: 'Italo-Japanese', desc: 'Kaiseki precision meets pasta craft. Wagyu ragù chawanmushi and miso risotto.' },
+  'Japanese+Italian': { name: 'Italo-Japanese', desc: 'Kaiseki precision meets pasta craft. Wagyu ragù chawanmushi and miso risotto.' },
+};
+
+function updateAlchemy() {
+  if (selectedA && selectedB) {
+    const key = selectedA + '+' + selectedB;
+    const recipe = fusionRecipes[key] || { name: 'New Fusion', desc: 'A daring combination of ' + selectedA + ' and ' + selectedB + ' traditions. The culinary world awaits your creation.' };
+    resultTitle.textContent = recipe.name;
+    resultDesc.textContent = recipe.desc;
+    alchemyResult.classList.add('visible');
+    burstParticles();
+  } else {
+    alchemyResult.classList.remove('visible');
+  }
+}
+
+ingredients.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cuisine = btn.dataset.cuisine;
+    if (!selectedA || (selectedA && selectedB)) {
+      selectedA = cuisine; selectedB = null;
+      slotA.classList.add('filled'); slotB.classList.remove('filled');
+      slotAValue.textContent = cuisine; slotBValue.textContent = '';
+      ingredients.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      alchemyResult.classList.remove('visible');
+    } else if (selectedA && !selectedB && cuisine !== selectedA) {
+      selectedB = cuisine;
+      slotB.classList.add('filled');
+      slotBValue.textContent = cuisine;
+      btn.classList.add('selected');
+      updateAlchemy();
+    }
+  });
+});
+
+// Particle burst for alchemy
+const aCanvas = document.getElementById('alchemyParticles');
+const aCtx = aCanvas.getContext('2d');
+let aW, aH;
+function resizeAlchemy() {
+  const rect = aCanvas.parentElement.getBoundingClientRect();
+  aW = aCanvas.width = rect.width;
+  aH = aCanvas.height = rect.height;
+}
+resizeAlchemy();
+window.addEventListener('resize', resizeAlchemy);
+
+let burstParticlesArr = [];
+function burstParticles() {
+  for (let i = 0; i < 60; i++) {
+    burstParticlesArr.push({
+      x: aW / 2, y: aH / 2,
+      vx: (Math.random() - 0.5) * 10,
+      vy: (Math.random() - 0.5) * 10,
+      life: 1,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    });
+  }
+}
+function animateAlchemyParticles() {
+  aCtx.clearRect(0, 0, aW, aH);
+  aCtx.globalCompositeOperation = 'lighter';
+  for (let i = burstParticlesArr.length - 1; i >= 0; i--) {
+    const p = burstParticlesArr[i];
+    p.x += p.vx; p.y += p.vy;
+    p.life -= 0.02;
+    p.vx *= 0.95; p.vy *= 0.95;
+    if (p.life <= 0) { burstParticlesArr.splice(i, 1); continue; }
+    aCtx.beginPath();
+    aCtx.arc(p.x, p.y, 3 * p.life, 0, Math.PI * 2);
+    aCtx.fillStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},${p.life})`;
+    aCtx.fill();
+  }
+  requestAnimationFrame(animateAlchemyParticles);
+}
+animateAlchemyParticles();
+
+// ============================================================
+// FLAVOR RADAR
+// ============================================================
+const radarCanvas = document.getElementById('radarCanvas');
+const rCtx = radarCanvas.getContext('2d');
+const radarData = {
+  texmex:    [0.9, 0.6, 0.8, 0.4, 0.3],
+  nikkei:    [0.3, 0.9, 0.4, 0.9, 0.7],
+  koreanmex: [0.7, 0.8, 0.9, 0.5, 0.4],
+  banhmi:    [0.5, 0.7, 0.3, 0.9, 0.5],
+  chifa:     [0.6, 0.9, 0.5, 0.6, 0.4],
+};
+const radarLabels = ['Sweet', 'Umami', 'Spicy', 'Sour', 'Bitter'];
+const radarColors = {
+  texmex: '#ff6b35', nikkei: '#2ec4b6', koreanmex: '#e71d36', banhmi: '#7b2cbf', chifa: '#ff9f1c'
+};
+let currentRadar = 'texmex';
+let targetRadar = 'texmex';
+let currentValues = [...radarData.texmex];
+
+function drawRadar() {
+  const w = radarCanvas.width;
+  const h = radarCanvas.height;
+  const cx = w / 2;
+  const cy = h / 2;
+  const radius = 140;
+  rCtx.clearRect(0, 0, w, h);
+  for (let i = 1; i <= 5; i++) {
+    rCtx.beginPath();
+    for (let j = 0; j < 5; j++) {
+      const angle = (Math.PI * 2 / 5) * j - Math.PI / 2;
+      const x = cx + Math.cos(angle) * (radius * i / 5);
+      const y = cy + Math.sin(angle) * (radius * i / 5);
+      if (j === 0) rCtx.moveTo(x, y); else rCtx.lineTo(x, y);
+    }
+    rCtx.closePath();
+    rCtx.strokeStyle = 'rgba(255,255,255,0.06)';
+    rCtx.stroke();
+  }
+  for (let i = 0; i < 5; i++) {
+    const angle = (Math.PI * 2 / 5) * i - Math.PI / 2;
+    rCtx.beginPath();
+    rCtx.moveTo(cx, cy);
+    rCtx.lineTo(cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius);
+    rCtx.strokeStyle = 'rgba(255,255,255,0.06)';
+    rCtx.stroke();
+    const lx = cx + Math.cos(angle) * (radius + 25);
+    const ly = cy + Math.sin(angle) * (radius + 25);
+    rCtx.fillStyle = 'var(--muted)';
+    rCtx.font = '11px JetBrains Mono';
+    rCtx.textAlign = 'center';
+    rCtx.textBaseline = 'middle';
+    rCtx.fillText(radarLabels[i], lx, ly);
+  }
+  rCtx.beginPath();
+  for (let i = 0; i < 5; i++) {
+    const angle = (Math.PI * 2 / 5) * i - Math.PI / 2;
+    const val = currentValues[i];
+    const x = cx + Math.cos(angle) * (radius * val);
+    const y = cy + Math.sin(angle) * (radius * val);
+    if (i === 0) rCtx.moveTo(x, y); else rCtx.lineTo(x, y);
+  }
+  rCtx.closePath();
+  rCtx.fillStyle = radarColors[currentRadar] + '20';
+  rCtx.fill();
+  rCtx.strokeStyle = radarColors[currentRadar];
+  rCtx.lineWidth = 2;
+  rCtx.stroke();
+  for (let i = 0; i < 5; i++) {
+    const angle = (Math.PI * 2 / 5) * i - Math.PI / 2;
+    const val = currentValues[i];
+    const x = cx + Math.cos(angle) * (radius * val);
+    const y = cy + Math.sin(angle) * (radius * val);
+    rCtx.beginPath();
+    rCtx.arc(x, y, 4, 0, Math.PI * 2);
+    rCtx.fillStyle = radarColors[currentRadar];
+    rCtx.fill();
+  }
+  requestAnimationFrame(drawRadar);
+}
+drawRadar();
+
+function animateRadarValues() {
+  const targets = radarData[targetRadar];
+  let changed = false;
+  for (let i = 0; i < 5; i++) {
+    const diff = targets[i] - currentValues[i];
+    if (Math.abs(diff) > 0.001) { currentValues[i] += diff * 0.08; changed = true; }
+  }
+  if (changed) requestAnimationFrame(animateRadarValues);
+}
+
+document.querySelectorAll('.radar-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.radar-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    targetRadar = btn.dataset.fusion;
+    currentRadar = targetRadar;
+    animateRadarValues();
+  });
+});
+
+// ============================================================
+// FORM
+// ============================================================
+document.getElementById('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = 'Transmitted ✓';
+  btn.style.background = 'linear-gradient(135deg, #4ade80, #22c55e)';
+  setTimeout(() => { btn.textContent = 'Transmit Signal'; btn.style.background = ''; e.target.reset(); }, 3000);
+});
+
+// ============================================================
+// SCROLL PROGRESS
+// ============================================================
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('scrollProgressBar').style.width = progress + '%';
+}, { passive: true });
+
+// ============================================================
+// SMOOTH ANCHOR SCROLL
+// ============================================================
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ============================================================
+// PARALLAX HERO CONTENT
+// ============================================================
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const heroContent = document.querySelector('.hero-content');
+  if (heroContent && scrolled < window.innerHeight) {
+    heroContent.style.transform = 'translateY(' + (scrolled * 0.35) + 'px)';
+    heroContent.style.opacity = 1 - (scrolled / window.innerHeight) * 0.7;
+  }
+}, { passive: true });
+
+// ============================================================
+// TEXT SCRAMBLE FOR SECTION LABELS
+// ============================================================
+class TextScramble {
+  constructor(el) { this.el = el; this.chars = '!<>-_\/[]{}—=+*^?#________'; this.original = el.textContent.trim(); }
+  scramble() {
+    let iteration = 0;
+    const interval = setInterval(() => {
+      this.el.textContent = this.original.split('').map((char, index) => {
+        if (index < iteration) return this.original[index];
+        return this.chars[Math.floor(Math.random() * this.chars.length)];
+      }).join('');
+      if (iteration >= this.original.length) clearInterval(interval);
+      iteration += 1 / 2;
+    }, 30);
+  }
+}
+
+document.querySelectorAll('.section-label').forEach(el => {
+  const scrambler = new TextScramble(el);
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) { scrambler.scramble(); obs.unobserve(entry.target); } });
+  }, { threshold: 0.5 });
+  obs.observe(el);
+});
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('load', () => {
+  const active = document.querySelector('.nav-link.active');
+  if (active) updateIndicator(active);
+});
+</script>
+
 </body>
 </html>
